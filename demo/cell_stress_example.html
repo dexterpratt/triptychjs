@@ -1,0 +1,66 @@
+<html lang="en">
+	<head>
+		<title>Cell Stress BEL Network</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {
+				background-color: #3333FF;
+				margin: 0px;
+				overflow: hidden;
+			}		
+		</style>
+		
+		<script src="http://code.jquery.com/jquery-latest.js"></script>
+
+   		<script type="text/javascript" src="../Three/Three.js"></script>
+
+		<script type="text/javascript" src="../Three/RequestAnimationFrame.js"></script>
+
+		<script type="text/javascript" src="../Three/Detector.js"></script>
+
+		<script type="text/javascript" src="../js/Triptych.js"></script>
+		
+		<script type="text/javascript" src="../js/BasicVisualizer.js"></script>
+		
+		<script type="text/javascript" src="../js/BasicControls.js"></script>
+
+		<script type="text/javascript" src="../js/SpringForceLayoutEngine.js"></script>
+	
+	</head>
+	<body>
+		<script>
+			if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+			
+			var sourceURL = "../data/cell_stress.xgmml",
+			visualizer, xgmml, graph, layoutEngine, space, controls;
+			
+			$.ajax({
+        			type: "GET",
+					url: sourceURL,
+					dataType: "xml",
+					success: function(xgmml) {
+					
+						graph = TRIPTYCH.graphFromXGMML(xgmml);
+						visualizer = new TRIPTYCH.BasicVisualizer(); 
+						layoutEngine = new TRIPTYCH.SpringForceLayoutEngine();
+						controls = new TRIPTYCH.BasicControls();
+						space = new TRIPTYCH.Space(graph, visualizer, layoutEngine, controls);
+						visualizer.setNodeTypes(graph);
+						space.init();
+						animate();
+ 
+					}
+				});
+			
+			function animate() {
+
+				requestAnimationFrame( animate );
+
+				space.update();
+
+			}
+			
+		</script>
+	</body>
+</html>
