@@ -2,6 +2,8 @@ TRIPTYCH.BasicVisualizer = function(){
 
 	// label parameters			
 	this.showLabels = true;
+	
+	this.showEdgeLabels = true;
 			
 	this.cameraLight = new THREE.PointLight( 0xFFFFFF );
 
@@ -105,26 +107,6 @@ TRIPTYCH.BasicVisualizer.prototype.findClosestIntersectedElement = function(mous
 	this.intersectionRole = null;
 };
 
-TRIPTYCH.BasicVisualizer.prototype.createEdgeParticleGeometry = function(){
-	var geometry = new THREE.Geometry();
-	var zSpacing = this.edgeParticlesLength / this.edgeParticleCount;
-	var particleZ = 0;
-	// create a line of particles in the z axis
-	for(var p = 0; p < this.edgeParticleCount; p++) {
-		
-		var pVertex = new THREE.Vertex(
-				new THREE.Vector3(0, 0, particleZ)
-			);
-		
-		// add it to the geometry
-		geometry.vertices.push(pVertex);
-		
-		// increment particleZ
-		particleZ += zSpacing;
-	}
-	return geometry;
-};
-
 TRIPTYCH.BasicVisualizer.prototype.updateNode = function(node){
 	var nodeObject = node.displayList.main;
 	if (!nodeObject){
@@ -165,9 +147,7 @@ TRIPTYCH.BasicVisualizer.prototype.makeNodeLabel = function (node){
  
  	var text = node.label;
  	
- 	var label = this.createSpriteLabel(text, 24, "blue", "white", 20);
-
-	//label.scale.x = label.scale.y = label.scale.z = 0.1;
+ 	var label = this.makeTextSprite(text, 36, "white");
 		
 	this.setLabelParameters(label, node);
 	
@@ -185,21 +165,21 @@ TRIPTYCH.BasicVisualizer.prototype.setLabelParameters = function (label, node){
 	label.position.y = node.position.y + 20;
 	label.position.z = node.position.z;
 	
-	//label.lookAt(this.camera.position);
-	
 	label.matrix.lookAt( this.camera.position, label.position, this.camera.up );
-	/*
-		if ( label.rotationAutoUpdate ) {
-
-			label.rotation.setRotationFromMatrix( label.matrix );
-
-		}
-	*/
 
 };
 
-TRIPTYCH.BasicVisualizer.prototype.createLabel = function (text, size, color, backGroundColor, backgroundMargin) {
-	if(!backgroundMargin) backgroundMargin = 50;
+TRIPTYCH.BasicVisualizer.prototype.getPowerOfTwo = function (value, pow) {
+	var pow = pow || 1;
+	while(pow<value) {
+		pow *= 2;
+	}
+	return pow;
+}
+
+TRIPTYCH.BasicVisualizer.prototype.expMakeTextSprite = function (text, size, color, backGroundColor, backgroundMargin) {
+	
+	if(!backgroundMargin) backgroundMargin = size / 10;
 	
 	var canvas = document.createElement("canvas");
 	
@@ -208,75 +188,77 @@ TRIPTYCH.BasicVisualizer.prototype.createLabel = function (text, size, color, ba
 	
 	var textWidth = context.measureText(text).width;
 	
-	canvas.width = textWidth + backgroundMargin;
-	canvas.height = size + backgroundMargin;
-	context = canvas.getContext("2d");
-	context.font = size + "pt Arial";
+	var w = (textWidth + backgroundMargin) / 2;
+	var h = (size + backgroundMargin) / 2;
+	
+	canvas.width = this.getPowerOfTwo(w);
+	canvas.height = this.getPowerOfTwo(h);
+	
+	//var centerX = canvas.width / 2;
+	//var centerY = canvas.height / 2;
 	
 	if(backGroundColor) {
 		context.fillStyle = backGroundColor;
-		context.fillRect(canvas.width / 2 - textWidth / 2 - backgroundMargin / 2, canvas.height / 2 - size / 2 - +backgroundMargin / 2, textWidth + backgroundMargin, size + backgroundMargin);
-	}
-	
-	context.textAlign = "center";
-	context.textBaseline = "middle";
-	context.fillStyle = color;
-	context.fillText(text, canvas.width / 2, canvas.height / 2);
-	
-	// context.strokeStyle = "black";
-	// context.strokeRect(0, 0, canvas.width, canvas.height);
-	
-	var texture = new THREE.Texture(canvas);
-	texture.needsUpdate = true;
-	
-	var material = new THREE.MeshBasicMaterial({
-		map : texture
-		});
-	
-	var mesh = new THREE.Mesh(new THREE.PlaneGeometry(canvas.width, canvas.height), material);
-	// mesh.overdraw = true;
-	mesh.doubleSided = true;
-	mesh.position.x = x - canvas.width;
-	mesh.position.y = y - canvas.height;
-	mesh.position.z = z;
-	
-	return mesh;
-};
+		//context.fillRect(centerX - (w / 2), centerY - (h /2) , centerX + (w /2), centerY + (h/2));
+		context.fillRect(0, 0 , w, h);
+		
+		//context.strokeStyle = "red";
+		//context.strokeRect((w/2) - (textWidth/ 4), (h/2)- (size /4) , (w/2) , (h/2) );
 
-TRIPTYCH.BasicVisualizer.prototype.createSpriteLabel = function (text, size, color, backGroundColor, backgroundMargin) {
-	if(!backgroundMargin) backgroundMargin = 50;
-	
-	var canvas = document.createElement("canvas");
-	
-	var context = canvas.getContext("2d");
-	context.font = size + "pt Arial";
-	
-	var textWidth = context.measureText(text).width;
-	
-	canvas.width = textWidth + backgroundMargin;
-	canvas.height = size + backgroundMargin;
-	context = canvas.getContext("2d");
-	context.font = size + "pt Arial";
-	
-	if(backGroundColor) {
-		context.fillStyle = backGroundColor;
-		context.fillRect(canvas.width / 2 - textWidth / 2 - backgroundMargin / 2, canvas.height / 2 - size / 2 - +backgroundMargin / 2, textWidth + backgroundMargin, size + backgroundMargin);
 	}
 	
 	context.textAlign = "center";
 	context.textBaseline = "middle";
 	context.fillStyle = color;
-	context.fillText(text, canvas.width / 2, canvas.height / 2);
-	
-	// context.strokeRect(0, 0, canvas.width, canvas.height);
+	context.fillText(text, w/2, h/2);
 	
 	var texture = new THREE.Texture(canvas);
 	texture.needsUpdate = true;
 	
 	var sprite = new THREE.Sprite( { map: texture, useScreenCoordinates: false, color: 0xffffff} );
+
+	//var ratio = canvas.width / canvas.height;
+	var scale = 0.1;
+	sprite.scale.set((w/h) * scale, scale);
+
+	return sprite;
+};
+
+TRIPTYCH.BasicVisualizer.prototype.makeTextSprite = function (text, size, color, backGroundColor, backgroundMargin) {
+	if(!backgroundMargin) backgroundMargin = 50;
+
+	var canvas = document.createElement("canvas");
+
+	var context = canvas.getContext("2d");
+	context.font = size + "pt Arial";
+
+	var textWidth = context.measureText(text).width;
+
+	canvas.width = textWidth + backgroundMargin;
+	canvas.height = size + backgroundMargin;
+	context = canvas.getContext("2d");
+	context.font = size + "pt Arial";
+
+	if(backGroundColor) {
+		context.fillStyle = backGroundColor;
+		context.fillRect(canvas.width / 2 - textWidth / 2 - backgroundMargin / 2, canvas.height / 2 - size / 2 - +backgroundMargin / 2, textWidth + backgroundMargin, size + backgroundMargin);
+	}
+
+	context.textAlign = "center";
+	context.textBaseline = "middle";
+	context.fillStyle = color;
+	context.fillText(text, canvas.width / 2, canvas.height / 2);
+
+	// context.strokeStyle = "black";
+	// context.strokeRect(0, 0, canvas.width, canvas.height);
+
+	var texture = new THREE.Texture(canvas);
+	texture.needsUpdate = true;
+
+	var sprite = new THREE.Sprite( { map: texture, useScreenCoordinates: false, color: 0xffffff} );
 	//sprite.scale.x = canvas.width;
 	//sprite.scale.y = canvas.height;
-	sprite.scale.set(canvas.width / 1000, canvas.height / 1000);
+	sprite.scale.set(canvas.width / 2000, canvas.height / 2000);
 	//sprite.uvScale.set( 0.5, 0.5 );
 	//sprite.uvOffset.set( 2.0, 10.0 );
 
@@ -295,66 +277,56 @@ TRIPTYCH.BasicVisualizer.prototype.makeMesh = function (position, material, geom
 TRIPTYCH.BasicVisualizer.prototype.initEdgeResources = function(node){
 	// edge parameters
 	this.lineMaterial = new THREE.LineBasicMaterial( { color: 0xffffff, opacity: 0.5 } );
-	
-	// edge particle variables for animation
-	this.edgeParticleCount = 20;
-	this.edgeParticlesLength = 1000;
-
-	this.edgeParticleGeometry = this.createEdgeParticleGeometry();
-	
-	this.edgeParticleMaterial = new THREE.ParticleBasicMaterial({
-			color: 0xFFFFFF,
-			size: 4,
-			transparent: true
-		});
 }
 
 TRIPTYCH.BasicVisualizer.prototype.updateEdge = function(edge){
 
 	// if no main in displayList, make the edge
 	var line = edge.displayList.main;
-	//var particles = edge.displayList.particles;
+
 	if (!line){
 		this.makeEdgeLine(edge);
-		//this.makeEdgeParticles(edge);
+		this.makeEdgeLabel(edge);
+
 	} else {
 		var fromVertex = line.geometry.vertices[0];
 		var toVertex = line.geometry.vertices[1];
 		fromVertex.position.copy(edge.from.position);
 		toVertex.position.copy(edge.to.position);
 		line.geometry.__dirtyVertices = true;
-		
-		//this.setEdgeParticleParameters(edge, particles);
+		this.updateEdgeLabel(edge);
 		
 	}
 	
 };
 
-TRIPTYCH.BasicVisualizer.prototype.setEdgeParticleParameters = function(edge, particles){
-		// scale particle system in Z
-		var v = edge.getVector();
-		var len = v.length();
-		var scale = len / this.edgeParticlesLength;
-		particles.scale.z = scale;
-		
-		// animation offset. loop every 100 updates - better if it works on timer...
-		// determine the offset: 0.1 * (edge length / num particles) *animationCount of that
-		var aCount = edge.displayList.animationCount;
-		if (aCount == null) aCount = 0;
-		var zOffset = 0.1 * (len / this.edgeParticleCount) * aCount;
-		aCount++;
-		if (aCount > 10) aCount = 0;
-		edge.displayList.animationCount = aCount
-		
-		v = v.setLength(zOffset);
-		
-		// place it at the edge "from" position plus the animation offset along the vector
-		particles.position = v.addSelf(edge.from.position);
-		
-		// make it look at the edge "to" position
-		particles.lookAt(edge.to.position);
-		
-		// not sure we need to update vertices
+TRIPTYCH.BasicVisualizer.prototype.updateEdgeLabel = function(edge){
+	// if no label in displayList, make the label
+	var label = edge.displayList.label;
+	if (!label){
+		label = this.makeEdgeLabel(edge);
+	} 
+	this.setEdgeLabelParameters(label, edge);	
+	
+}
+
+TRIPTYCH.BasicVisualizer.prototype.makeEdgeLabel = function(edge){
+
+	var label = this.makeTextSprite(edge.relationship.type, 28, "yellow", null);
+	this.scene.add( label );
+	edge.displayList.label = label;
+	return label;
+	
+};
+
+TRIPTYCH.BasicVisualizer.prototype.setEdgeLabelParameters = function(label, edge){
+
+	var v = edge.getVector();
+
+	label.position = edge.from.position.clone().addSelf(v.multiplyScalar(0.5));
+	
+	label.matrix.lookAt( this.camera.position, label.position, this.camera.up );
+	
 };
 
 TRIPTYCH.BasicVisualizer.prototype.makeEdgeLine = function(edge){
@@ -362,15 +334,6 @@ TRIPTYCH.BasicVisualizer.prototype.makeEdgeLine = function(edge){
 	var line = this.makeLine( edge.from.position, edge.to.position, this.lineMaterial );
 	this.scene.add( line );
 	edge.displayList.main = line;
-	
-};
-
-TRIPTYCH.BasicVisualizer.prototype.makeEdgeParticles = function(edge){
-
-	var particles = new THREE.ParticleSystem( this.edgeParticleGeometry, this.edgeParticleMaterial);
-	this.scene.add( particles );
-	edge.displayList.particles = particles;
-	this.setEdgeParticleParameters(edge, particles);
 	
 };
 
