@@ -1,9 +1,12 @@
 TRIPTYCH.SpringForceLayoutEngine = function(graph){
 	this.averageForceUpdateThreshold = 0.001;
-	this.repulsion = 10;
-	this.repulsionLimit = 500;
-	this.attraction = 0.01;
-	this.maxForce = 500.0;
+	this.repulsion = 1;
+	//this.repulsionLimit = 500;
+	this.springConstant = 0.02;
+	this.maxForce = 10.0;
+	this.edgeLength = 50;
+	this.damping = 0.01;
+	this.updateCount = 0;
 };
 
 TRIPTYCH.SpringForceLayoutEngine.prototype = new TRIPTYCH.DynamicLayoutEngine();
@@ -81,7 +84,7 @@ TRIPTYCH.SpringForceLayoutEngine.prototype.layoutStep = function(){
 	for (var i = 0; i<len; i++){
 		var node = nodes[i];
 		var distanceToCenter = node.position.length();
-		this.addForce(node, node.position, -0.01);
+		this.addForce(node, node.position, -0.0001);
 	}
 	*/
 	
@@ -99,6 +102,10 @@ TRIPTYCH.SpringForceLayoutEngine.prototype.layoutStep = function(){
 		
 	}
 	*/
+	this.updateCount++;
+	if (this.updateCount > 500) {
+		this.needsUpdate = false;
+	}
 
 };
 
@@ -112,20 +119,11 @@ TRIPTYCH.SpringForceLayoutEngine.prototype.addRepulsiveForces = function(node1, 
 	// if d > repulsionLimit then no force is added.  (prevents disjoint graph segments from flying away)
 	var v = node1.getVector(node2);
 
-	var d = v.length();
+	var scaledEdgeLength = v.length() / this.edgeLength;
 	
-	if (d == 0){
-		// nodes are on top of each other, so the vector is (0,0,0)
-		node1.force.x = node1.force.x + 1;
-		node2.force.x = node2.force.x -1;
-		node1.force.y = node1.force.y + 1;
-		node2.force.y = node2.force.y -1;
-		node1.force.z = node1.force.z + 1;
-		node2.force.z = node2.force.z -1;
-		
-	} else {
-		if (d < 1) d = 1;
-		var scale = Math.min(1000, this.repulsion/(d * d));
+	if (scaledEdgeLength > 0.01){
+
+		var scale = this.repulsion/(scaledEdgeLength * scaledEdgeLength);
 		this.addForce(node1, v, -1 * scale);	
 		this.addForce(node2, v, scale);
 	}	
@@ -133,9 +131,9 @@ TRIPTYCH.SpringForceLayoutEngine.prototype.addRepulsiveForces = function(node1, 
 
 TRIPTYCH.SpringForceLayoutEngine.prototype.addEdgeForces = function(fromNode, toNode){
 		var v = fromNode.getVector(toNode);
-		var len = Math.max(0, v.length() - 300);
-		if (len != 0){
-			var scalar = this.attraction * len;
+		var displacement = v.length() - this.edgeLength;
+		if (displacement > 0.1){
+			var scalar = this.springConstant * displacement;
 			this.addForce(fromNode, v, scalar);
 			this.addForce(toNode, v, -1 * scalar);
 		}
@@ -144,10 +142,16 @@ TRIPTYCH.SpringForceLayoutEngine.prototype.addEdgeForces = function(fromNode, to
 TRIPTYCH.SpringForceLayoutEngine.prototype.updateNodePositions = function(){
 	for (var i in this.graph.nodes){
 		var node = this.graph.nodes[i];
-		var netForce = node.force.length();
-		var scale = Math.min(0.1 , (10 / netForce));
-		//var scale = 0.1;
-		node.position.addSelf(node.force.multiplyScalar(scale));
+		var net = node.force.length();
+		
+		if (net > this.maxForce){
+			node.force.normalize();
+			node.force.multiplyScalar( this.maxForce * 0.5 );
+			node.position.addSelf(node.force);
+		} else if (net > 0.001){
+			node.force.multiplyScalar(this.damping);
+			node.position.addSelf(node.force);
+		}
 	}	
 };
 

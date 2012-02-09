@@ -268,7 +268,6 @@ TRIPTYCH.BasicVisualizer.prototype.createSpriteLabel = function (text, size, col
 	context.fillStyle = color;
 	context.fillText(text, canvas.width / 2, canvas.height / 2);
 	
-	// context.strokeStyle = "black";
 	// context.strokeRect(0, 0, canvas.width, canvas.height);
 	
 	var texture = new THREE.Texture(canvas);

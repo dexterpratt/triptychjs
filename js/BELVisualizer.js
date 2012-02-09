@@ -111,27 +111,27 @@ TRIPTYCH.BELVisualizer.prototype.initEdgeResources = function(node){
 	this.grayMaterial = new THREE.MeshPhongMaterial( { color: 0x333333, shading: THREE.SmoothShading } );
 	this.edgeReferenceLength = 100;
 	this.barGeometry = new THREE.CubeGeometry( 2, 2, this.edgeReferenceLength );
-	this.dottedGeometry = this.createDottedGeometry(25);
-	var increaseMap = THREE.ImageUtils.loadTexture("../textures/increaseDot.png");
-	var decreaseMap = THREE.ImageUtils.loadTexture("../textures/decreaseDot.png");
+	this.dottedGeometry = this.createDottedGeometry(15);
+	var increaseMap = THREE.ImageUtils.loadTexture("../../textures/increaseDot.png");
+	var decreaseMap = THREE.ImageUtils.loadTexture("../../textures/decreaseDot.png");
 	this.increaseParticleMaterial = new THREE.ParticleBasicMaterial({
 			color: 0xFFFFFF,
 			map: increaseMap,
-			size: 10,
+			size: 4,
 			transparent: true
 		});
 	this.decreaseParticleMaterial = new THREE.ParticleBasicMaterial({
 			color: 0xFFFFFF,
 			map: decreaseMap,
-			size: 10,
+			size: 4,
 			transparent: true
 		});
 		
-	var sparkMap = THREE.ImageUtils.loadTexture("../textures/sprite1.png");
+	var sparkMap = THREE.ImageUtils.loadTexture("../../textures/sprite1.png");
 	this.sparkParticleMaterial = new THREE.ParticleBasicMaterial({
 			color: 0xFFFFFF,
 			map: sparkMap,
-			size: 10,
+			size: 4,
 			transparent: true
 		});
 		
