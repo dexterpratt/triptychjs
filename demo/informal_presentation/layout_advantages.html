@@ -65,10 +65,16 @@
 		<button id="next">Next</button>
 	</div>
 	
+	<div id="slideTitle">An Extra Dimension can Help with Layout</div>
+	
+	<div id="cytoscape_layout">
+	<img src="img/cell_stress.png">
+	</div>
+	
 	<script>
 		if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 		
-		var sourceURL = "../../data/p53_myc.xgmml",
+		var sourceURL = "graphs/cell_stress.xgmml",
 		visualizer, xgmml, graph, layoutEngine, space, controls;
 		
 		$.ajax({
@@ -78,7 +84,7 @@
 				success: function(xgmml) {
 				
 					graph = TRIPTYCH.graphFromXGMML(xgmml);
-					visualizer = new TRIPTYCH.BELVisualizer(); 
+					visualizer = new TRIPTYCH.BasicVisualizer(); 
 					layoutEngine = new TRIPTYCH.SpringForceLayoutEngine();
 					controls = new TRIPTYCH.BasicControls();
 					space = new TRIPTYCH.Space(graph, visualizer, layoutEngine, controls);

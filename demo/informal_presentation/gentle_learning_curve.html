@@ -65,6 +65,63 @@
 		<button id="next">Next</button>
 	</div>
 	
+	<div id="triptychCode">
+	<pre>
+		&lt;script&gt;
+		if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+		
+		var sourceURL = "graphs/introduction.xgml",
+		visualizer, graph, layoutEngine, space, controls, loader;
+		
+		$.ajax({
+				type: "GET",
+				url: sourceURL,
+				dataType: "xml",
+				success: function(data) {
+				
+					loader = new TRIPTYCH.BasicGraphLoader();
+					graph = loader.load('xgml', data);
+					visualizer = new TRIPTYCH.TextVisualizer(); 
+					layoutEngine = new TRIPTYCH.SpringForceLayoutEngine();
+					controls = new TRIPTYCH.BasicControls();
+					space = new TRIPTYCH.Space(graph, visualizer, layoutEngine, controls);
+					space.init();
+					animate();
+	
+				}
+			});
+		
+		function animate() {
+	
+			requestAnimationFrame( animate );
+	
+			space.update();
+	
+		}
+		
+		&lt;/script&gt;
+	</pre>
+	</div>
+	
+	
+	<div id="slideTitle">What do I Mean by "Gentle Learning Curve"?</div>
+	
+	<div id="slideBullets">
+	<ul>
+	<li>Modular Functionality as Cooperating Objects
+    <ul>
+    <li>layout
+    <li>visualization
+    <li>navigation
+    <li>data loading
+    </ul>
+	<li>Start using Triptych.js without learning about 3D geometries, shaders, or camera control
+	<li>Extend or replace objects as needed
+
+	</ul>
+
+	</div>
+	
 	<script>
 		if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 		
