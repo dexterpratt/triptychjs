@@ -46,6 +46,17 @@ TRIPTYCH.Graph.prototype = {
 	nodeById : function (id){
 		return this.nodeIdMap[id];
 	}
+	
+	findEdge : function (fromNode, relationship, toNode){
+		for (var i = 0; i < this.edges.size(); i++){
+			var edge = this.edges[i];
+			if (fromNode == edge.from && toNode == edge.to && relationship == edge.relationship){
+				
+				return edge;
+			}
+		}
+		return false;
+	}
 
 };
 

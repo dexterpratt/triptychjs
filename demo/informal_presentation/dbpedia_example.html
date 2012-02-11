@@ -16,8 +16,8 @@
 	
 	<link rel="stylesheet" type="text/css" href="css/slide.css" />
 	
-	<script src="http://code.jquery.com/jquery-latest.js"></script>
-
+	<script type="text/javascript" src="../../jquery/jquery-1.7.1.min.js"></script>
+	
 	<script type="text/javascript" src="../../Three/Three.js"></script>
 
 	<script type="text/javascript" src="../../Three/RequestAnimationFrame.js"></script>
@@ -27,8 +27,10 @@
 	<script type="text/javascript" src="../../js/Triptych.js"></script>
 	
 	<script type="text/javascript" src="../../js/BasicVisualizer.js"></script>
+	
+	<script type="text/javascript" src="../../js/TextVisualizer.js"></script>
 
-	<script type="text/javascript" src="../../js/BELVisualizer.js"></script>
+	<script type="text/javascript" src="../../js/BasicGraphLoader.js"></script>
 	
 	<script type="text/javascript" src="../../js/BasicControls.js"></script>
 
@@ -68,17 +70,18 @@
 	<script>
 		if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 		
-		var sourceURL = "../../data/p53_myc.xgmml",
-		visualizer, xgmml, graph, layoutEngine, space, controls;
+		var sourceURL = "graphs/p53_myc.xgmml",
+		visualizer, xgmml, graph, layoutEngine, space, controls, loader;
 		
 		$.ajax({
 				type: "GET",
 				url: sourceURL,
-				dataType: "xml",
-				success: function(xgmml) {
+				dataType: "json",
+				success: function(data) {
 				
-					graph = TRIPTYCH.graphFromXGMML(xgmml);
-					visualizer = new TRIPTYCH.BELVisualizer(); 
+					loader = new TRIPTYCH.DBPediaGraphLoader();
+					graph = loader.load(data);
+					visualizer = new TRIPTYCH.BasicVisualizer(); 
 					layoutEngine = new TRIPTYCH.SpringForceLayoutEngine();
 					controls = new TRIPTYCH.BasicControls();
 					space = new TRIPTYCH.Space(graph, visualizer, layoutEngine, controls);
@@ -88,6 +91,24 @@
 	
 				}
 			});
+		
+		TRIPTYCH.Node.prototype.onClick = function(event, role){
+			alert("clicked x=" + this.x + " y=" this.y + " z=" + this.z);
+		
+		}
+		
+		function addDBPedia(url, position){
+			$.ajax({
+				type: "GET",
+				url: url,
+				dataType: "json",
+				success: function(data) {
+				
+					loader.add(graph, data, position);
+	
+				}
+			});
+		}
 		
 		function animate() {
 	

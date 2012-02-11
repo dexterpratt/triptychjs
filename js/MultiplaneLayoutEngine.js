@@ -30,8 +30,8 @@ TRIPTYCH.MultiplaneLayoutEngine.prototype.randomNodePositions = function(){
 	for (var i = 0; i<len; i++){
 		var node = nodes[i];
 		node.position.set(Math.random() * 2 - 1, Math.random() * 2 - 1, node.position.z);
-		node.position.normalize();
-		node.position.multiplyScalar( Math.random() * 10 + 450 );
+		//node.position.normalize();
+		//node.position.multiplyScalar( Math.random() * 10 + 450 );
 	}
 };
 

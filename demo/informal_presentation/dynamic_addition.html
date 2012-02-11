@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<title>Opportunities for New Information Metaphors</title>
+	<title>Example: DBPedia Explorer</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 	<style>
@@ -15,7 +15,7 @@
 	</style>
 	
 	<link rel="stylesheet" type="text/css" href="css/slide.css" />
-
+	
 	<script type="text/javascript" src="../../jquery/jquery-1.7.1.min.js"></script>
 	
 	<script type="text/javascript" src="../../Three/Three.js"></script>
@@ -28,22 +28,24 @@
 	
 	<script type="text/javascript" src="../../js/BasicVisualizer.js"></script>
 	
-	<script type="text/javascript" src="../../js/BasicControls.js"></script>
-	
-	<script type="text/javascript" src="../../js/BasicGraphLoader.js"></script>
+	<script type="text/javascript" src="../../js/TextVisualizer.js"></script>
 
-	<script type="text/javascript" src="../../js/MultiplaneLayoutEngine.js"></script>
+	<script type="text/javascript" src="../../js/BasicGraphLoader.js"></script>
+	
+	<script type="text/javascript" src="../../js/BasicControls.js"></script>
+
+	<script type="text/javascript" src="../../js/SpringForceLayoutEngine.js"></script>
 	
 	<script type="text/javascript" src="js/controls.js"></script>
 	
 	<script>
 	
 	function handleNext(){
-		window.location="dbpedia_example.html";
+		window.location="conclusion.html";
 	}
 	
 	function handleBack(){
-		window.location="focusing_attention.html";
+		window.location="new_information_metaphors.html";
 	}
 	
 	function handleUp(){
@@ -68,34 +70,47 @@
 	<script>
 		if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 		
-		var sourceURL = "graphs/sirt1_homology.xgmml",
-		visualizer, xgmml, graph, layoutEngine, space, controls, loader;
+		var sourceURL = "./php/get_psicquic_xgmml.php?name=RBL2",
+		visualizer, xgmml, graph, layoutEngine, space, controls, loader, xgmml;
 		
 		$.ajax({
 				type: "GET",
 				url: sourceURL,
 				dataType: "xml",
 				success: function(data) {
-				
+					xgmml = data;
 					loader = new TRIPTYCH.BasicGraphLoader();
 					graph = loader.load('xgmml', data);
 					visualizer = new TRIPTYCH.BasicVisualizer(); 
-					layoutEngine = new TRIPTYCH.MultiplaneLayoutEngine();
+					layoutEngine = new TRIPTYCH.SpringForceLayoutEngine();
 					controls = new TRIPTYCH.BasicControls();
 					space = new TRIPTYCH.Space(graph, visualizer, layoutEngine, controls);
 					visualizer.setNodeTypes(graph);
-					$.each(graph.nodes, function (index, node){
-						if (node.type == "MGI") {
-							node.position.z = -100;
-						} else {
-							node.position.z = 100;
-						}
-					});
 					space.init();
 					animate();
 	
 				}
 			});
+		
+		TRIPTYCH.Node.prototype.onClick = function(event, role){
+			alert("clicked x=" + this.position.x + " y=" + this.position.y + " z=" + this.position.z);
+			addToGraph(this.name, this.position);
+		
+		}
+		
+		function addToGraph(name, position){
+			url = "./php/get_psicquic_xgmml.php?name=" + name;
+			$.ajax({
+				type: "GET",
+				url: url,
+				dataType: "xml",
+				success: function(data) {
+				
+					loader.add(graph, data, position);
+	
+				}
+			});
+		}
 		
 		function animate() {
 	

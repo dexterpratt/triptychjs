@@ -1,85 +1,61 @@
-TRIPTYCH.BasicGraphLoader = function(){
+TRIPTYCH.DBPediaGraphLoader = function(){
 
 	// no initializations yet
 
 };
 
-TRIPTYCH.BasicGraphLoader.prototype = new TRIPTYCH.GraphLoader();
+TRIPTYCH.DBPediaGraphLoader.prototype = new TRIPTYCH.GraphLoader();
 
-TRIPTYCH.BasicGraphLoader.prototype.constructor = TRIPTYCH.BasicGraphLoader;
+TRIPTYCH.DBPediaGraphLoader.prototype.constructor = TRIPTYCH.DBPediaGraphLoader;
 
-TRIPTYCH.BasicGraphLoader.prototype.load = function(type, data){
-	if (type == 'xgml') return this.loadXGML(data);
-	if (type == 'xgmml') return this.loadXGMML(data);
-	return false;
-};
 
 // XGMML is one of the formats exported by Cytoscape and is
 // used by the BEL Framework from Selventa
 //
 // this basic loader creates relationships on the fly,
 // does not enforce a schema of allowed relationships or node types
-TRIPTYCH.BasicGraphLoader.prototype.loadXGMML = function (xgmml){
+TRIPTYCH.DBPediaGraphLoader.prototype.load = function (json){
 	var graph = new TRIPTYCH.Graph();
 	graph.relationships = {};
-	var centerPoint = new THREE.Vector3(0,0,0);
-	this.addXGMML(graph, xgmml, centerpoint);
-}
-
-TRIPTYCH.BasicGraphLoader.prototype.addXGMML = function (graph, xgmml, position){
-	
 	$(xgmml).find('graph').each(function(){
 		$(this).find('node').each(function(){
 			var nodeId = $(this).attr('id');
-			var node = graph.nodeById(nodeId);
-			if (!node){
-				node = new TRIPTYCH.Node(nodeId);
-				node.position.set(100,50,50);
-				node.label = $(this).attr('label');
-				$(this).find('att').each(function(){
-					var name = $(this).attr('name');
-					if (name == "namespace"){
-						node.type = $(this).attr('value');
-					}
-				});
-				node.position.copy(position);
-				graph.addNode(node);
-			}
+			var node = new TRIPTYCH.Node(nodeId);
+			node.position.set(100,50,50);
+			node.label = $(this).attr('label');
+			$(this).find('att').each(function(){
+				var name = $(this).attr('name');
+				if (name == "namespace"){
+					node.type = $(this).attr('value');
+				}
+			});
+			graph.addNode(node);
 		});
 		$(this).find('edge').each(function(){
 			var fromId  = $(this).attr('source');
 			var toId  = $(this).attr('target');
 			var relType = "edge";
-			
 			$(this).find('att').each(function(){
 				var name = $(this).attr('name');
 				if (name == "interaction"){
 					relType = $(this).attr('value');
 				}
 			});
-			var rel = graph.relationships[relType];
+			var rel = relationships[relType];
 			if (rel == null){
 				rel = new TRIPTYCH.Relationship(relType);
-				graph.relationships[relType] = rel;
+				relationships[relType] = rel;
 			}
 			var fromNode = graph.nodeById(fromId);
 			var toNode = graph.nodeById(toId);
-			var edge = graph.findEdge(fromNode, rel, toNode);
-			if (!edge){
-				graph.addEdge(new TRIPTYCH.Edge(fromNode, rel, toNode));
-			}
+			graph.addEdge(new TRIPTYCH.Edge(fromNode, rel, toNode));
 		});
 	});
 	return graph;
 };
 
-// XGML is one of the formats supported by yFiles / yEd
-//
-// this basic loader creates relationships on the fly,
-// does not enforce a schema of allowed relationships or node types
 
-TRIPTYCH.BasicGraphLoader.prototype.loadXGML = function (data){
-	var graph = new TRIPTYCH.Graph();
+TRIPTYCH.DBPediaGraphLoader.prototype.add = function (graph, data, position){
 	var relationships = {};
 	// The data elements in the schema are sections and
 	// attributes. 
