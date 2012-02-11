@@ -28,6 +28,12 @@ TRIPTYCH.BasicGraphLoader.prototype.loadXGMML = function (xgmml){
 			var node = new TRIPTYCH.Node(nodeId);
 			node.position.set(100,50,50);
 			node.label = $(this).attr('label');
+			$(this).find('att').each(function(){
+				var name = $(this).attr('name');
+				if (name == "namespace"){
+					node.type = $(this).attr('value');
+				}
+			});
 			graph.addNode(node);
 		});
 		$(this).find('edge').each(function(){

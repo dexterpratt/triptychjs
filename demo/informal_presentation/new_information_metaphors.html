@@ -15,9 +15,9 @@
 	</style>
 	
 	<link rel="stylesheet" type="text/css" href="css/slide.css" />
-	
-	<script src="http://code.jquery.com/jquery-latest.js"></script>
 
+	<script type="text/javascript" src="../../jquery/jquery-1.7.1.min.js"></script>
+	
 	<script type="text/javascript" src="../../Three/Three.js"></script>
 
 	<script type="text/javascript" src="../../Three/RequestAnimationFrame.js"></script>
@@ -27,12 +27,12 @@
 	<script type="text/javascript" src="../../js/Triptych.js"></script>
 	
 	<script type="text/javascript" src="../../js/BasicVisualizer.js"></script>
-
-	<script type="text/javascript" src="../../js/BELVisualizer.js"></script>
 	
 	<script type="text/javascript" src="../../js/BasicControls.js"></script>
+	
+	<script type="text/javascript" src="../../js/BasicGraphLoader.js"></script>
 
-	<script type="text/javascript" src="../../js/SpringForceLayoutEngine.js"></script>
+	<script type="text/javascript" src="../../js/MultiplaneLayoutEngine.js"></script>
 	
 	<script type="text/javascript" src="js/controls.js"></script>
 	
@@ -68,21 +68,29 @@
 	<script>
 		if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 		
-		var sourceURL = "../../data/p53_myc.xgmml",
-		visualizer, xgmml, graph, layoutEngine, space, controls;
+		var sourceURL = "graphs/sirt1_homology.xgmml",
+		visualizer, xgmml, graph, layoutEngine, space, controls, loader;
 		
 		$.ajax({
 				type: "GET",
 				url: sourceURL,
 				dataType: "xml",
-				success: function(xgmml) {
+				success: function(data) {
 				
-					graph = TRIPTYCH.graphFromXGMML(xgmml);
-					visualizer = new TRIPTYCH.BELVisualizer(); 
-					layoutEngine = new TRIPTYCH.SpringForceLayoutEngine();
+					loader = new TRIPTYCH.BasicGraphLoader();
+					graph = loader.load('xgmml', data);
+					visualizer = new TRIPTYCH.BasicVisualizer(); 
+					layoutEngine = new TRIPTYCH.MultiplaneLayoutEngine();
 					controls = new TRIPTYCH.BasicControls();
 					space = new TRIPTYCH.Space(graph, visualizer, layoutEngine, controls);
 					visualizer.setNodeTypes(graph);
+					$.each(graph.nodes, function (index, node){
+						if (node.type == "MGI") {
+							node.position.z = -60;
+						} else {
+							node.position.z = 60;
+						}
+					});
 					space.init();
 					animate();
 	
