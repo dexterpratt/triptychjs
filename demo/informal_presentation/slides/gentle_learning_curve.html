@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>A Gentle Learning Curve</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<style>
+		body {
+			background-color: #3333FF;
+			margin: 0px;
+			overflow: hidden;
+		}
+
+		
+	</style>
+	
+	<link rel="stylesheet" type="text/css" href="../css/slide.css" />
+
+	<script type="text/javascript" src="../../../jquery/jquery-1.7.1.min.js"></script>
+	
+	<script type="text/javascript" src="../../../Three/Three.js"></script>
+
+	<script type="text/javascript" src="../../../Three/RequestAnimationFrame.js"></script>
+
+	<script type="text/javascript" src="../../../Three/Detector.js"></script>
+
+	<script type="text/javascript" src="../../../js/Triptych.js"></script>
+	
+	<script type="text/javascript" src="../../../js/BasicVisualizer.js"></script>
+	
+	<script type="text/javascript" src="../../../js/BELVisualizer.js"></script>
+	
+	<script type="text/javascript" src="../../../js/BasicGraphLoader.js"></script>
+
+	<script type="text/javascript" src="../../../js/BasicControls.js"></script>
+
+	<script type="text/javascript" src="../../../js/SpringForceLayoutEngine.js"></script>
+	
+	<script type="text/javascript" src="../js/controls.js"></script>	
+	
+</head>
+
+<body>
+	<div id="controls">
+		<button id="back">Back</button>
+		<button id="next">Next</button>
+	</div>
+	
+	<div id="triptychCode">
+	<pre>
+var sourceURL = "../graphs/introduction.xgml",
+visualizer, graph, layoutEngine, space, controls, loader;
+
+$.ajax({
+	type: "GET",
+	url: sourceURL,
+	dataType: "xml",
+	success: function(data) {
+	
+		loader = new TRIPTYCH.BasicGraphLoader();
+		graph = loader.load('xgml', data);
+		visualizer = new TRIPTYCH.TextVisualizer(); 
+		layoutEngine = new TRIPTYCH.SpringForceLayoutEngine();
+		controls = new TRIPTYCH.BasicControls();
+		space = new TRIPTYCH.Space(graph, visualizer, layoutEngine, controls);
+		space.init();
+		animate();
+	
+	}
+});
+</pre>
+	</div>
+	
+
+	<div id="slideText">
+	<p id="slideTitle">What do I Mean by a Gentle Learning Curve?</p>
+	<ul>
+	<li>Modular Functionality as Cooperating Objects
+    <ul>
+    <li>layout
+    <li>visualization
+    <li>navigation
+    <li>data loading
+    </ul>
+	<li>Start using Triptych.js without learning about 3D geometries, shaders, or camera control
+	<li>Extend or replace objects as needed
+
+	</ul>
+
+	</div>
+	
+	
+	<script>
+	
+		$("#slideText").hide();
+		$("#triptychCode").hide();
+	
+		var slideTextDisplayed = false;
+		var codeDisplayed = false;
+	
+		function handleNext(){
+		
+			if (codeDisplayed){
+		
+				window.location="layout_advantages.html";
+				
+			} else if (slideTextDisplayed) {
+				$("#slideText").fadeOut(1000);
+				$("#triptychCode").fadeIn(1000);
+				
+				codeDisplayed = true;
+				
+			} else {
+			
+				$("#slideText").fadeIn(1000);
+				slideTextDisplayed = true;
+			}
+		}	
+
+		function handleBack(){
+			window.location="triptych_goals.html";
+		}
+	
+	</script>
+	
+	<script>
+		if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+		
+		var sourceURL = "../graphs/p53_myc.xgmml",
+		visualizer, graph, layoutEngine, space, controls, loader;
+		
+		$.ajax({
+				type: "GET",
+				url: sourceURL,
+				dataType: "xml",
+				success: function(data) {
+				
+					loader = new TRIPTYCH.BasicGraphLoader();
+					graph = loader.loadXGMML(data);
+					visualizer = new TRIPTYCH.BELVisualizer(); 
+					layoutEngine = new TRIPTYCH.SpringForceLayoutEngine();
+					controls = new TRIPTYCH.BasicControls();
+					space = new TRIPTYCH.Space(graph, visualizer, layoutEngine, controls);
+					visualizer.setNodeTypes(graph);
+					space.init();
+					animate();
+	
+				}
+			});
+		
+		function animate() {
+	
+			requestAnimationFrame( animate );
+	
+			space.update();
+	
+		}
+		
+	</script>
+</body>
+
+</html>
+

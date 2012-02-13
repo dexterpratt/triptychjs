@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>Opportunities for New Information Metaphors</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="stylesheet" type="text/css" href="../css/slide.css" />
+
+	<script type="text/javascript" src="../../../jquery/jquery-1.7.1.min.js"></script>
+	
+	<script type="text/javascript" src="../../../Three/Three.js"></script>
+
+	<script type="text/javascript" src="../../../Three/RequestAnimationFrame.js"></script>
+
+	<script type="text/javascript" src="../../../Three/Detector.js"></script>
+
+	<script type="text/javascript" src="../../../js/Triptych.js"></script>
+	
+	<script type="text/javascript" src="../../../js/BasicVisualizer.js"></script>
+	
+	<script type="text/javascript" src="../../../js/HomologyVisualizer.js"></script>
+
+	<script type="text/javascript" src="../../../js/BasicControls.js"></script>
+	
+	<script type="text/javascript" src="../../../js/BasicGraphLoader.js"></script>
+	
+	<script type="text/javascript" src="../../../js/SpringForceLayoutEngine.js"></script>
+
+	<script type="text/javascript" src="../../../js/MultiplaneLayoutEngine.js"></script>
+	
+	<script type="text/javascript" src="../js/controls.js"></script>
+	
+</head>
+
+<body>
+	<div id="controls">
+		<button id="back">Back</button>
+		<button id="next">Next</button>
+	</div>
+	
+	<script>
+	
+	function handleNext(){
+		window.location="dynamic_addition.html";
+	}
+	
+	function handleBack(){
+		window.location="focusing_attention.html";
+	}
+	
+	</script>
+	
+	<script>
+		if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+		
+		var sourceURL = "../graphs/sirt1_homology.xgmml",
+		visualizer, xgmml, graph, layoutEngine, space, controls, loader;
+		
+		$.ajax({
+				type: "GET",
+				url: sourceURL,
+				dataType: "xml",
+				success: function(data) {
+				
+					loader = new TRIPTYCH.BasicGraphLoader();
+					graph = loader.loadXGMML(data);
+					visualizer = new TRIPTYCH.HomologyVisualizer(); 
+					layoutEngine = new TRIPTYCH.MultiplaneLayoutEngine();
+					controls = new TRIPTYCH.BasicControls();
+					space = new TRIPTYCH.Space(graph, visualizer, layoutEngine, controls);
+					visualizer.setNodeTypes(graph);
+					$.each(graph.nodes, function (index, node){
+						if (node.type == "MGI") {
+							node.position.z = -100;
+						} else {
+							node.position.z = 100;
+						}
+					});
+					space.init();
+					animate();
+	
+				}
+			});
+		
+		function animate() {
+	
+			requestAnimationFrame( animate );
+	
+			space.update();
+	
+		}
+		
+	</script>
+</body>
+
+</html>
+

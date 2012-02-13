@@ -286,7 +286,7 @@ TRIPTYCH.BasicVisualizer.prototype.updateEdge = function(edge){
 
 	if (!line){
 		this.makeEdgeLine(edge);
-		this.makeEdgeLabel(edge);
+		if (this.showEdgeLabels) this.makeEdgeLabel(edge);
 
 	} else {
 		var fromVertex = line.geometry.vertices[0];
@@ -294,7 +294,7 @@ TRIPTYCH.BasicVisualizer.prototype.updateEdge = function(edge){
 		fromVertex.position.copy(edge.from.position);
 		toVertex.position.copy(edge.to.position);
 		line.geometry.__dirtyVertices = true;
-		this.updateEdgeLabel(edge);
+		if (this.showEdgeLabels) this.updateEdgeLabel(edge);
 		
 	}
 	

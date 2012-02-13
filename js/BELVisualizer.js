@@ -112,8 +112,8 @@ TRIPTYCH.BELVisualizer.prototype.initEdgeResources = function(node){
 	this.edgeReferenceLength = 100;
 	this.barGeometry = new THREE.CubeGeometry( 2, 2, this.edgeReferenceLength );
 	this.dottedGeometry = this.createDottedGeometry(15);
-	var increaseMap = THREE.ImageUtils.loadTexture("../../textures/increaseDot.png");
-	var decreaseMap = THREE.ImageUtils.loadTexture("../../textures/decreaseDot.png");
+	var increaseMap = THREE.ImageUtils.loadTexture("../../../textures/increaseDot.png");
+	var decreaseMap = THREE.ImageUtils.loadTexture("../../../textures/decreaseDot.png");
 	this.increaseParticleMaterial = new THREE.ParticleBasicMaterial({
 			color: 0xFFFFFF,
 			map: increaseMap,
@@ -127,7 +127,7 @@ TRIPTYCH.BELVisualizer.prototype.initEdgeResources = function(node){
 			transparent: true
 		});
 		
-	var sparkMap = THREE.ImageUtils.loadTexture("../../textures/sprite1.png");
+	var sparkMap = THREE.ImageUtils.loadTexture("../../../textures/sprite1.png");
 	this.sparkParticleMaterial = new THREE.ParticleBasicMaterial({
 			color: 0xFFFFFF,
 			map: sparkMap,
@@ -143,7 +143,7 @@ TRIPTYCH.BELVisualizer.prototype.initEdgeResources = function(node){
 	this.lineMaterial = new THREE.LineBasicMaterial( { color: 0xffffff, opacity: 0.5 } );
 };
 
-TRIPTYCH.BasicVisualizer.prototype.createDottedGeometry = function(numberOfDots){
+TRIPTYCH.BELVisualizer.prototype.createDottedGeometry = function(numberOfDots){
 	var geometry = new THREE.Geometry();
 	var zSpacing = this.edgeReferenceLength / numberOfDots;
 	var particleZ = 0;
@@ -163,7 +163,7 @@ TRIPTYCH.BasicVisualizer.prototype.createDottedGeometry = function(numberOfDots)
 	return geometry;
 };
 
-TRIPTYCH.BasicVisualizer.prototype.updateEdge = function(edge){
+TRIPTYCH.BELVisualizer.prototype.updateEdge = function(edge){
 
 	// if no main in displayList, make the edge
 	var object = edge.displayList.main;
@@ -240,7 +240,7 @@ TRIPTYCH.BELVisualizer.prototype.makeDoubleBar = function(material){
 	return mesh;
 };
 
-TRIPTYCH.BasicVisualizer.prototype.scaleAndRotateEdge = function(edge, object, useMidpoint){
+TRIPTYCH.BELVisualizer.prototype.scaleAndRotateEdge = function(edge, object, useMidpoint){
 	// the object is always built to be scaled in Z and rotated align with the vertices
 	
 	// scale object in Z

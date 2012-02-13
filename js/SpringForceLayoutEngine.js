@@ -1,12 +1,11 @@
 TRIPTYCH.SpringForceLayoutEngine = function(graph){
 	this.averageForceUpdateThreshold = 0.001;
 	this.repulsion = 1;
-	//this.repulsionLimit = 500;
-	this.springConstant = 0.02;
+	this.springConstant = 0.4;
 	this.maxForce = 10.0;
-	this.edgeLength = 50;
+	this.edgeLength = 100;
 	this.damping = 0.01;
-	this.updateCount = 0;
+	
 };
 
 TRIPTYCH.SpringForceLayoutEngine.prototype = new TRIPTYCH.DynamicLayoutEngine();
@@ -89,23 +88,7 @@ TRIPTYCH.SpringForceLayoutEngine.prototype.layoutStep = function(){
 	*/
 	
 	this.updateNodePositions();
-	
-	// If the absoluteForceSum is less than the update threshold,
-	// then stop updating
-	/*	
-	var avgForce = this.getAverageForce();
-	
 
-	if ( avgForce < this.averageForceUpdateThreshold){
-	
-		this.needsUpdate = false;
-		
-	}
-	*/
-	this.updateCount++;
-	if (this.updateCount > 500) {
-		this.needsUpdate = false;
-	}
 
 };
 

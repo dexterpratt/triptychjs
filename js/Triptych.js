@@ -26,6 +26,9 @@ TRIPTYCH.Graph = function(){
 	this.nodes = [];
 	this.edges = [];
 	this.nodeIdMap = {};
+	this.nodeIdentifierMap = {};
+	this.relationships = {};
+	this.maxId = 0;
 };
 
 TRIPTYCH.Graph.prototype = {
@@ -35,7 +38,22 @@ TRIPTYCH.Graph.prototype = {
 	addNode : function (node){
 		this.nodes.push(node);
 		this.nodeIdMap[node.id] = node;
+		if (node.identifier) this.nodeIdentifierMap[node.identifier] = node;
 		node.graph = this;
+		this.maxId = Math.max(this.maxId, node.id);
+	},
+	
+	copyExternalNode : function (externalNode){
+		var internalNode = this.nodeByIdentifier(externalNode.identifier);
+		if (internalNode) return internalNode;
+		internalNode = new TRIPTYCH.Node(graph.maxId + 1);
+		internalNode.identifier = externalNode.identifier;
+		internalNode.type = externalNode.type;
+		internalNode.label = externalNode.label;
+		internalNode.needsUpdate = true;
+		this.addNode(internalNode);
+		return internalNode;
+	
 	},
 	
 	addEdge : function (edge){
@@ -43,12 +61,33 @@ TRIPTYCH.Graph.prototype = {
 		edge.graph = this;
 	},
 	
+	relationshipByType : function (type){
+		return this.relationships[type];
+	},
+	
+	findOrCreateRelationship : function (type){
+		var rel = this.relationshipByType(type);
+		if (rel) return rel;
+		rel = new TRIPTYCH.Relationship(type);
+		this.relationships[type] = rel;
+		return rel;
+	},
+	
+	// id within the graph
 	nodeById : function (id){
 		return this.nodeIdMap[id];
-	}
+	},
+	
+	// id across graphs 
+	// (a given application is responsible for assigning unique identifiers
+	// for nodes in the graphs that it loads)
+	nodeByIdentifier : function(identifier){
+		if (identifier) return this.nodeIdentifierMap[identifier];
+		return false;
+	},
 	
 	findEdge : function (fromNode, relationship, toNode){
-		for (var i = 0; i < this.edges.size(); i++){
+		for (var i = 0; i < this.edges.length; i++){
 			var edge = this.edges[i];
 			if (fromNode == edge.from && toNode == edge.to && relationship == edge.relationship){
 				
@@ -56,6 +95,32 @@ TRIPTYCH.Graph.prototype = {
 			}
 		}
 		return false;
+	},
+	
+	copyExternalEdge : function(edge){
+		var rel = this.findOrCreateRelationship(edge.type);
+		var from = this.copyExternalNode(edge.from);
+		var to = this.copyExternalNode(edge.to);
+		var internalEdge = this.findEdge(from, rel, to);
+		if (internalEdge) return internalEdge;
+		internalEdge = new TRIPTYCH.Edge(from, rel, to);
+		this.addEdge(internalEdge);
+		return internalEdge;
+	},
+	
+	addGraph : function (graph){
+		var internalGraph = this;
+		$.each(graph.nodes, function(index, node){
+			internalGraph.copyExternalNode(node);	
+		});
+		
+		$.each(graph.edges, function(index, edge){
+			var internalEdge = internalGraph.copyExternalEdge(edge);
+			internalEdge.initNodePositions();
+		});
+		
+		return internalGraph;
+	
 	}
 
 };
@@ -72,6 +137,7 @@ TRIPTYCH.Node = function(id){
 	this.force = new THREE.Vector3(0, 0, 0);
 	this.modified = true;
 	this.id = id;
+	this.identifier = null;
 	this.label = "node";
 	this.type = "node";
 	this.displayList = {};
@@ -108,6 +174,10 @@ TRIPTYCH.Node.prototype = {
 	onIntersectedEnd : function (event, role){
 		this.highlighted = false;
 		this.needsUpdate = true;
+	},
+	
+	atOrigin : function(){
+		return this.position.x == 0 && this.position.y == 0 && this.position.z == 0;
 	}
 	
 	
@@ -136,6 +206,17 @@ TRIPTYCH.Edge.prototype = {
 		var v = this.to.position.clone();
 		v.subSelf(this.from.position);
 		return v;
+	},
+	
+	initNodePositions : function(){
+		// if one of the two nodes position isn't initialized,
+		// copy its position from the other.
+		// this will start nodes in the layout next to a neighbor
+		if (this.to.atOrigin() && !this.from.atOrigin()){
+			this.to.position.copy(this.from.position);
+		} else if (this.from.atOrigin() && !this.to.atOrigin()){
+			this.from.position.copy(this.to.position);
+		}
 	}
 	
 };
@@ -167,13 +248,6 @@ TRIPTYCH.Relationship.prototype = {
 
 };
 
-TRIPTYCH.Rel = {
-
-	"DEFAULT" : new TRIPTYCH.Relationship("DEFAULT"),
-	"PLUS" : new TRIPTYCH.Relationship("PLUS", true),
-	"MINUS" : new TRIPTYCH.Relationship("MINUS", true, true)
-
-};
 
 /*
 ------------------------------------
@@ -197,40 +271,6 @@ TRIPTYCH.Relationship.prototype = {
 
 };
 
-
-TRIPTYCH.graphFromXGMML = function (xgmml){
-	var graph = new TRIPTYCH.Graph();
-	var relationships = {};
-	$(xgmml).find('graph').each(function(){
-		$(this).find('node').each(function(){
-			var nodeId = $(this).attr('id');
-			var node = new TRIPTYCH.Node(nodeId);
-			node.position.set(100,50,50);
-			node.label = $(this).attr('label');
-			graph.addNode(node);
-		});
-		$(this).find('edge').each(function(){
-			var fromId  = $(this).attr('source');
-			var toId  = $(this).attr('target');
-			var relType = "edge";
-			$(this).find('att').each(function(){
-				var name = $(this).attr('name');
-				if (name == "interaction"){
-					relType = $(this).attr('value');
-				}
-			});
-			var rel = relationships[relType];
-			if (rel == null){
-				rel = new TRIPTYCH.Relationship(relType);
-				relationships[relType] = rel;
-			}
-			var fromNode = graph.nodeById(fromId);
-			var toNode = graph.nodeById(toId);
-			graph.addEdge(new TRIPTYCH.Edge(fromNode, rel, toNode));
-		});
-	});
-	return graph;
-};
 
 /*
 ------------------------------------
@@ -329,6 +369,7 @@ TRIPTYCH.LayoutEngine.prototype = {
 TRIPTYCH.DynamicLayoutEngine = function(graph){
 
 	this.needsUpdate = true;
+	this.updateCount = 200;
 	
 };
 
@@ -338,10 +379,21 @@ TRIPTYCH.DynamicLayoutEngine.prototype.constructor = TRIPTYCH.DynamicLayoutEngin
 
 TRIPTYCH.DynamicLayoutEngine.prototype.update = function(){
 
+	if (this.updateCount <= 0){
+		this.needsUpdate = false;
+	}
 	if (this.needsUpdate){
 		this.layoutStep();
+		this.updateCount--;
 	}
 	return this.needsUpdate;
+	
+};
+
+TRIPTYCH.DynamicLayoutEngine.prototype.startUpdating = function(max){
+
+	this.needsUpdate = true;
+	this.updateCount = max || 200;
 	
 };
 
@@ -358,6 +410,7 @@ TRIPTYCH.Space = function(graph, visualizer, layoutEngine, controls, container){
 	this.layoutEngine = layoutEngine;
 	this.container = container;
 	this.controls = controls;
+	this.cameraInitialZ = 300;
 	
 };
 
@@ -385,8 +438,8 @@ TRIPTYCH.Space.prototype = {
 	},
 	
 	initCamera : function(){
-		this.camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
-		this.camera.position.z = 500;
+		this.camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 1000 );
+		this.camera.position.z = this.cameraInitialZ;
 	},
 	
 	clearStatus : function(){

@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>Dynamic Addition to Graphs: PSICQUIC Explorer</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="stylesheet" type="text/css" href="../css/slide.css" />
+
+	<script type="text/javascript" src="../../../jquery/jquery-1.7.1.min.js"></script>
+	
+	<script type="text/javascript" src="../../../Three/Three.js"></script>
+
+	<script type="text/javascript" src="../../../Three/RequestAnimationFrame.js"></script>
+
+	<script type="text/javascript" src="../../../Three/Detector.js"></script>
+
+	<script type="text/javascript" src="../../../js/Triptych.js"></script>
+	
+	<script type="text/javascript" src="../../../js/BasicVisualizer.js"></script>
+	
+	<script type="text/javascript" src="../../../js/BasicGraphLoader.js"></script>
+
+	<script type="text/javascript" src="../../../js/BasicControls.js"></script>
+
+	<script type="text/javascript" src="../../../js/SpringForceLayoutEngine.js"></script>
+	
+	<script type="text/javascript" src="../js/controls.js"></script>	
+	
+
+</head>
+
+<body>
+	<div id="controls">
+		<button id="back">Back</button>
+		<button id="next">Next</button>
+	</div>
+	
+	<script>
+	
+	function handleNext(){
+		window.location="conclusion.html";
+	}
+	
+	function handleBack(){
+		window.location="new_information_metaphors.html";
+	}
+	
+	</script>
+	
+	<script>
+		if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+		
+		var sourceURL = "../php/get_psicquic_xgmml.php?name=RBL2",
+		visualizer, xgmml, graph, layoutEngine, space, controls, loader, xgmml;
+		
+		$.ajax({
+				type: "GET",
+				url: sourceURL,
+				dataType: "xml",
+				success: function(data) {
+					xgmml = data;
+					loader = new TRIPTYCH.BasicGraphLoader();
+					loader.typeFilter = ["9606"];
+					graph = loader.loadXGMML(data);
+					visualizer = new TRIPTYCH.BasicVisualizer(); 
+					visualizer.showEdgeLabels = false;
+					layoutEngine = new TRIPTYCH.SpringForceLayoutEngine();
+					controls = new TRIPTYCH.BasicControls();
+					space = new TRIPTYCH.Space(graph, visualizer, layoutEngine, controls);
+					visualizer.setNodeTypes(graph);
+					space.init();
+					animate();
+	
+				}
+			});
+		
+		TRIPTYCH.Node.prototype.onClick = function(event, role){
+			//alert("clicked x=" + this.position.x + " y=" + this.position.y + " z=" + this.position.z);
+			alert(this.label);
+			addToGraph(this);
+	
+		}
+		
+		function addToGraph(queryNode){
+			url = "../php/get_psicquic_xgmml.php?name=" + queryNode.label;
+			$.ajax({
+				type: "GET",
+				url: url,
+				dataType: "xml",
+				success: function(data) {
+				
+					loader.loadXGMML(data, graph);
+					layoutEngine.startUpdating(500);
+	
+				}
+			});
+		}
+		
+		function animate() {
+	
+			requestAnimationFrame( animate );
+	
+			space.update();
+	
+		}
+		
+	</script>
+</body>
+
+</html>
+

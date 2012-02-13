@@ -1,6 +1,6 @@
 TRIPTYCH.BasicGraphLoader = function(){
 
-	// no initializations yet
+	this.typeFilter = "none";
 
 };
 
@@ -19,31 +19,34 @@ TRIPTYCH.BasicGraphLoader.prototype.load = function(type, data){
 //
 // this basic loader creates relationships on the fly,
 // does not enforce a schema of allowed relationships or node types
-TRIPTYCH.BasicGraphLoader.prototype.loadXGMML = function (xgmml){
+TRIPTYCH.BasicGraphLoader.prototype.loadXGMML = function (xgmml, existingGraph){
 	var graph = new TRIPTYCH.Graph();
-	graph.relationships = {};
-	var centerPoint = new THREE.Vector3(0,0,0);
-	this.addXGMML(graph, xgmml, centerpoint);
-}
-
-TRIPTYCH.BasicGraphLoader.prototype.addXGMML = function (graph, xgmml, position){
+	var loader = this;
 	
 	$(xgmml).find('graph').each(function(){
 		$(this).find('node').each(function(){
 			var nodeId = $(this).attr('id');
 			var node = graph.nodeById(nodeId);
 			if (!node){
-				node = new TRIPTYCH.Node(nodeId);
-				node.position.set(100,50,50);
-				node.label = $(this).attr('label');
+				
+				var type;
 				$(this).find('att').each(function(){
 					var name = $(this).attr('name');
 					if (name == "namespace"){
-						node.type = $(this).attr('value');
+						type = $(this).attr('value');
+					} else if (name == "taxid"){
+						type = $(this).attr('value');
 					}
 				});
-				node.position.copy(position);
-				graph.addNode(node);
+				
+				if (loader.typeFilter == "none" || $.inArray(type, loader.typeFilter) != -1){
+					node = new TRIPTYCH.Node(nodeId);
+					node.type = type;
+					node.label = $(this).attr('label');
+					node.identifier = node.type + ":" + node.label;
+				
+					graph.addNode(node);
+				}
 			}
 		});
 		$(this).find('edge').each(function(){
@@ -51,25 +54,27 @@ TRIPTYCH.BasicGraphLoader.prototype.addXGMML = function (graph, xgmml, position)
 			var toId  = $(this).attr('target');
 			var relType = "edge";
 			
-			$(this).find('att').each(function(){
-				var name = $(this).attr('name');
-				if (name == "interaction"){
-					relType = $(this).attr('value');
-				}
-			});
-			var rel = graph.relationships[relType];
-			if (rel == null){
-				rel = new TRIPTYCH.Relationship(relType);
-				graph.relationships[relType] = rel;
-			}
 			var fromNode = graph.nodeById(fromId);
 			var toNode = graph.nodeById(toId);
-			var edge = graph.findEdge(fromNode, rel, toNode);
-			if (!edge){
-				graph.addEdge(new TRIPTYCH.Edge(fromNode, rel, toNode));
+			
+			if (fromNode && toNode){
+				$(this).find('att').each(function(){
+					var name = $(this).attr('name');
+					if (name == "interaction"){
+						relType = $(this).attr('value');
+					}
+				});
+				
+				var rel = graph.findOrCreateRelationship(relType);
+				
+				var edge = graph.findEdge(fromNode, rel, toNode);
+				if (!edge){
+					graph.addEdge(new TRIPTYCH.Edge(fromNode, rel, toNode));
+				}
 			}
 		});
 	});
+	if (existingGraph) return existingGraph.addGraph(graph);
 	return graph;
 };
 
@@ -114,8 +119,8 @@ TRIPTYCH.BasicGraphLoader.prototype.loadXGML = function (data){
 							});
 							if (id && label){
 								var node = new TRIPTYCH.Node(id);
-								node.position.set(100,50,50);
 								node.label = label;
+								node.identifier = node.type + ":" + node.label;
 								graph.addNode(node);
 							}
 				
@@ -136,11 +141,7 @@ TRIPTYCH.BasicGraphLoader.prototype.loadXGML = function (data){
 								}
 							});
 							if (source && target && label){
-								var rel = relationships[label];
-								if (!rel){
-									rel = new TRIPTYCH.Relationship(label);
-									relationships[label] = rel;
-								}
+								var rel = graph.findOrCreateRelationship(label);
 								var fromNode = graph.nodeById(source);
 								var toNode = graph.nodeById(target);
 								graph.addEdge(new TRIPTYCH.Edge(fromNode, rel, toNode));

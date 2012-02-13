@@ -77,5 +77,17 @@ $(document).ready(function() {
 
 });
 
+function handleUp(){
+}
 
+function handleDown(){
 
+}
+
+function handleNext(){
+
+}
+
+function handleBack(){
+
+}
