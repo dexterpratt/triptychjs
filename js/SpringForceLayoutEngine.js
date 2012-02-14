@@ -2,9 +2,9 @@ TRIPTYCH.SpringForceLayoutEngine = function(graph){
 	this.averageForceUpdateThreshold = 0.001;
 	this.repulsion = 1;
 	this.springConstant = 0.4;
-	this.maxForce = 10.0;
+	this.maxForce = 40.0;
 	this.edgeLength = 100;
-	this.damping = 0.01;
+	this.damping = 0.1;
 	
 };
 
@@ -28,7 +28,7 @@ TRIPTYCH.SpringForceLayoutEngine.prototype.randomNodePositions = function(){
 		var node = nodes[i];
 		node.position.set(Math.random() * 2 - 1, Math.random() * 2 - 1, Math.random() * 2 - 1);
 		node.position.normalize();
-		node.position.multiplyScalar( Math.random() * 10 + 450 );
+		node.position.multiplyScalar( Math.random() * 10 + 200 );
 	}
 };
 
@@ -99,17 +99,16 @@ TRIPTYCH.SpringForceLayoutEngine.prototype.addForce = function(node, vector, sca
 };
 
 TRIPTYCH.SpringForceLayoutEngine.prototype.addRepulsiveForces = function(node1, node2){
-	// if d > repulsionLimit then no force is added.  (prevents disjoint graph segments from flying away)
 	var v = node1.getVector(node2);
 
 	var scaledEdgeLength = v.length() / this.edgeLength;
 	
-	if (scaledEdgeLength > 0.01){
+	if (scaledEdgeLength < 0.1) scaledEdgeLength = 0.1
 
-		var scale = this.repulsion/(scaledEdgeLength * scaledEdgeLength);
-		this.addForce(node1, v, -1 * scale);	
-		this.addForce(node2, v, scale);
-	}	
+	var scale = this.repulsion/(scaledEdgeLength * scaledEdgeLength);
+	this.addForce(node1, v, -1 * scale);	
+	this.addForce(node2, v, scale);
+	
 };
 
 TRIPTYCH.SpringForceLayoutEngine.prototype.addEdgeForces = function(fromNode, toNode){
@@ -125,16 +124,16 @@ TRIPTYCH.SpringForceLayoutEngine.prototype.addEdgeForces = function(fromNode, to
 TRIPTYCH.SpringForceLayoutEngine.prototype.updateNodePositions = function(){
 	for (var i in this.graph.nodes){
 		var node = this.graph.nodes[i];
-		var net = node.force.length();
+		var len = node.force.length();
+		var f = node.force.clone();
+		if (len > this.maxForce) len = this.maxForce;
+	
+		f.normalize();
+		f.multiplyScalar(len * this.damping);
 		
-		if (net > this.maxForce){
-			node.force.normalize();
-			node.force.multiplyScalar( this.maxForce * 0.5 );
-			node.position.addSelf(node.force);
-		} else if (net > 0.001){
-			node.force.multiplyScalar(this.damping);
-			node.position.addSelf(node.force);
-		}
+		node.position.addSelf(f);
+		
+
 	}	
 };
 

@@ -2,14 +2,7 @@
 <graph label="myc and p53" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:cy="http://www.cytoscape.org" xmlns="http://www.cs.rpi.edu/XGMML" directed="1">
 <att type="integer" name="nodeCount" value="42"/>
 <att type="integer" name="edgeCount" value="60"/>
-<node label="Source Label" id="2548">
-	<att type="string" name="namespace" value="oldBEL"/>
-	<att type="string" name="identifier" value="Source Label"/>
-</node>
-<node label="Target Label" id="2549">
-	<att type="string" name="namespace" value="oldBEL"/>
-	<att type="string" name="identifier" value="Target Label"/>
-</node>
+
 <node label="MYCN P@T50" id="2550">
 	<att type="string" name="namespace" value="oldBEL"/>
 	<att type="string" name="identifier" value="MYCN P@T50"/>
@@ -170,9 +163,7 @@
 	<att type="string" name="namespace" value="oldBEL"/>
 	<att type="string" name="identifier" value="exp(CDKN2B)"/>
 </node>
-<edge label="Source Label other Target Label" source="2548" target="2549">
-    <att type="string" name="interaction" value="other"/>
-</edge>
+
 <edge label="MYCN P@T50 modificationOf MYCN" source="2550" target="2551">
     <att type="string" name="interaction" value="modificationOf"/>
 </edge>

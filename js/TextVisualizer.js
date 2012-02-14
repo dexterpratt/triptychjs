@@ -44,5 +44,10 @@ TRIPTYCH.TextVisualizer.prototype.makeNodeObject = function(node){
 	return textObject;
 };
 
+TRIPTYCH.TextVisualizer.prototype.initEdgeResources = function(node){
+	// edge parameters
+	this.lineMaterial = new THREE.LineBasicMaterial( { color: 0xffffff, opacity: 1.0 } );
+}
+
 
 

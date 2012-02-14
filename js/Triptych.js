@@ -213,9 +213,15 @@ TRIPTYCH.Edge.prototype = {
 		// copy its position from the other.
 		// this will start nodes in the layout next to a neighbor
 		if (this.to.atOrigin() && !this.from.atOrigin()){
-			this.to.position.copy(this.from.position);
+			this.to.position.set(Math.random() + this.from.position.x, 
+								Math.random() + this.from.position.y,
+								Math.random() + this.from.position.z);
+			//this.to.position.copy(this.from.position);
 		} else if (this.from.atOrigin() && !this.to.atOrigin()){
-			this.from.position.copy(this.to.position);
+			this.from.position.set(Math.random() + this.to.position.x, 
+								Math.random() + this.to.position.y,
+								Math.random() + this.to.position.z);
+			//this.from.position.copy(this.to.position);
 		}
 	}
 	
@@ -394,6 +400,13 @@ TRIPTYCH.DynamicLayoutEngine.prototype.startUpdating = function(max){
 
 	this.needsUpdate = true;
 	this.updateCount = max || 200;
+	
+};
+
+TRIPTYCH.DynamicLayoutEngine.prototype.stopUpdating = function(){
+
+	this.needsUpdate = false;
+	this.updateCount = 0;
 	
 };
 

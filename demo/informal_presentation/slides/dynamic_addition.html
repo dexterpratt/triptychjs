@@ -77,7 +77,7 @@
 		
 		TRIPTYCH.Node.prototype.onClick = function(event, role){
 			//alert("clicked x=" + this.position.x + " y=" + this.position.y + " z=" + this.position.z);
-			alert(this.label);
+			//alert(this.label);
 			addToGraph(this);
 	
 		}
@@ -89,9 +89,9 @@
 				url: url,
 				dataType: "xml",
 				success: function(data) {
-				
+					layoutEngine.stopUpdating();
 					loader.loadXGMML(data, graph);
-					layoutEngine.startUpdating(500);
+					layoutEngine.startUpdating(100);
 	
 				}
 			});

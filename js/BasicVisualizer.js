@@ -67,11 +67,9 @@ TRIPTYCH.BasicVisualizer.prototype.setNodeTypes = function(graph){
 };
 
 TRIPTYCH.BasicVisualizer.prototype.initNodeResources = function(){
-	// node parameters
-	// this.nodeMaterial = new THREE.MeshLambertMaterial({ color: 0xFF3333 });
-	this.nodeMaterial = new THREE.MeshPhongMaterial( { color: 0xff3333, shading: THREE.SmoothShading } );
-	this.nodeSelectedMaterial = new THREE.MeshPhongMaterial( { color: 0xffff00, shading: THREE.SmoothShading } );
-	this.nodeHighlightedMaterial = new THREE.MeshPhongMaterial( { color: 0x00ffff, shading: THREE.SmoothShading } );
+	this.nodeMaterial = new THREE.MeshPhongMaterial( { color: 0xff3333,  specular:0xbbaa99, shininess:50, shading: THREE.SmoothShading } );
+	this.nodeSelectedMaterial = new THREE.MeshPhongMaterial( { color: 0xffff00, specular:0xbbaa99, shininess:50, shading: THREE.SmoothShading } );
+	this.nodeHighlightedMaterial = new THREE.MeshPhongMaterial( { color: 0x00ffff, specular:0xbbaa99, shininess:50, shading: THREE.SmoothShading } );
 
 };
 
@@ -276,7 +274,7 @@ TRIPTYCH.BasicVisualizer.prototype.makeMesh = function (position, material, geom
 
 TRIPTYCH.BasicVisualizer.prototype.initEdgeResources = function(node){
 	// edge parameters
-	this.lineMaterial = new THREE.LineBasicMaterial( { color: 0xffffff, opacity: 0.5 } );
+	this.lineMaterial = new THREE.LineBasicMaterial( { color: 0xff0000, opacity: 1.0 } );
 }
 
 TRIPTYCH.BasicVisualizer.prototype.updateEdge = function(edge){

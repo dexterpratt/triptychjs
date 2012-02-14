@@ -1,0 +1,693 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<graph id="calimocho-1329253347636" label="PSICQUIC" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns="http://www.cs.rpi.edu/XGMML" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <att name="documentVersion" value="1.1"/>
+    <att name="backgroundColor" type="string" value="#ffffff"/>
+    <att name="networkMetadata">
+        <rdf:RDF>
+            <rdf:Description>
+                <dc:type>Molecular Interactions</dc:type>
+                <dc:description>Query: CCNE2</dc:description>
+                <dc:identifier>N/A</dc:identifier>
+                <dc:date>2012-02-14 21:02:27</dc:date>
+                <dc:title>PSICQUIC</dc:title>
+                <dc:source>http://psicquic.googlecode.com</dc:source>
+                <dc:format>Cytoscape-XGMML</dc:format>
+            </rdf:Description>
+        </rdf:RDF>
+    </att>
+    <att name="GRAPH_VIEW_ZOOM" type="real" value="0.86823"/>
+    <att name="GRAPH_VIEW_CENTER_X" type="real" value="120.0"/>
+    <att name="GRAPH_VIEW_CENTER_Y" type="real" value="120.0"/>
+    <node id="2" label="CCNE2">
+        <att name="gene name" value="CCNE2"/>
+        <att name="identifier type" value="uniprotkb"/>
+        <att name="identifier" value="O96020"/>
+        <att name="altid.uniprotkb" type="string" value="ccne2_human"/>
+        <att name="canonicalName" type="string" value="CCNE2"/>
+        <att name="alias.uniprotkb" type="string" value="CCNE2"/>
+        <att name="id.intact" type="string" value="EBI-375033"/>
+        <att name="altid.irefindex" type="string" value="IOmVpC5YGEeEIKvYs8BEvx7ZydQ9606"/>
+        <att name="id.uniprotkb" type="string" value="O96020"/>
+        <att name="taxid" type="string" value="9606"/>
+        <att name="gene name" value="CCNE2"/>
+        <att name="identifier type" value="uniprotkb"/>
+        <att name="identifier" value="O96020"/>
+        <att name="altid.uniprotkb" type="string" value="ccne2_human"/>
+        <att name="canonicalName" type="string" value="CCNE2"/>
+        <att name="alias.uniprotkb" type="string" value="CCNE2"/>
+        <att name="id.intact" type="string" value="EBI-375033"/>
+        <att name="altid.irefindex" type="string" value="IOmVpC5YGEeEIKvYs8BEvx7ZydQ9606"/>
+        <att name="id.uniprotkb" type="string" value="O96020"/>
+        <att name="taxid" type="string" value="9606"/>
+        <graphics type="ellipse" fill="#ffffff" outline="#282828" width="3" w="45.0" h="25.0" x="80.0" y="0.0">
+            <att name="cytoscapeNodeGraphicsAttributes">
+                <att name="nodeLabelFont" value="Default-0-12"/>
+            </att>
+        </graphics>
+    </node>
+    <node id="3" label="CDK3">
+        <att name="gene name" value="CDK3"/>
+        <att name="identifier type" value="uniprotkb"/>
+        <att name="identifier" value="Q00526"/>
+        <att name="altid.uniprotkb">
+            <att name="altid.uniprotkb" type="string" value="Cell division protein kinase 3"/>
+            <att name="altid.uniprotkb" type="string" value="CDKN3"/>
+            <att name="altid.uniprotkb" type="string" value="cdk3_human"/>
+        </att>
+        <att name="canonicalName" type="string" value="CDK3"/>
+        <att name="alias.uniprotkb" type="string" value="CDK3"/>
+        <att name="id.intact" type="string" value="EBI-1245761"/>
+        <att name="altid.irefindex" type="string" value="onZJVt7UGEcTd7B78QKlyNwduW89606"/>
+        <att name="id.uniprotkb" type="string" value="Q00526"/>
+        <att name="taxid" type="string" value="9606"/>
+        <att name="gene name" value="CDK3"/>
+        <att name="identifier type" value="uniprotkb"/>
+        <att name="identifier" value="Q00526"/>
+        <att name="altid.uniprotkb">
+            <att name="altid.uniprotkb" type="string" value="Cell division protein kinase 3"/>
+            <att name="altid.uniprotkb" type="string" value="CDKN3"/>
+            <att name="altid.uniprotkb" type="string" value="cdk3_human"/>
+        </att>
+        <att name="canonicalName" type="string" value="CDK3"/>
+        <att name="alias.uniprotkb" type="string" value="CDK3"/>
+        <att name="id.intact" type="string" value="EBI-1245761"/>
+        <att name="altid.irefindex" type="string" value="onZJVt7UGEcTd7B78QKlyNwduW89606"/>
+        <att name="id.uniprotkb" type="string" value="Q00526"/>
+        <att name="taxid" type="string" value="9606"/>
+        <graphics type="ellipse" fill="#ffffff" outline="#282828" width="3" w="45.0" h="25.0" x="80.0" y="160.0">
+            <att name="cytoscapeNodeGraphicsAttributes">
+                <att name="nodeLabelFont" value="Default-0-12"/>
+            </att>
+        </graphics>
+    </node>
+    <edge label="CCNE2 (EBI-1245772) CDK3" source="2" target="3">
+        <att name="pubauth.author" type="string" value="Zariwala et al. (1998)"/>
+        <att name="type.psi-mi" type="string" value="MI:0915"/>
+        <att name="source.psi-mi" type="string" value="MI:0469"/>
+        <att name="id.intact" type="string" value="EBI-1245772"/>
+        <att name="id.irefindex" type="string" value="Qfwq/RoS4Nl7bVfo2b96iLI9erc"/>
+        <att name="pubid.pubmed" type="string" value="9840943"/>
+        <att name="detmethod.psi-mi" type="string" value="MI:0018"/>
+        <att name="confidence.intact confidence" type="string" value="0.97"/>
+        <att name="pubauth.author" type="string" value="Zariwala et al. (1998)"/>
+        <att name="type.psi-mi" type="string" value="MI:0915"/>
+        <att name="source.psi-mi" type="string" value="MI:0469"/>
+        <att name="id.intact" type="string" value="EBI-1245772"/>
+        <att name="id.irefindex" type="string" value="Qfwq/RoS4Nl7bVfo2b96iLI9erc"/>
+        <att name="pubid.pubmed" type="string" value="9840943"/>
+        <att name="detmethod.psi-mi" type="string" value="MI:0018"/>
+        <att name="confidence.intact confidence" type="string" value="0.97"/>
+    </edge>
+    <node id="5" label="CDKN1C">
+        <att name="gene name" value="CDKN1C"/>
+        <att name="identifier type" value="uniprotkb"/>
+        <att name="identifier" value="P49918"/>
+        <att name="altid.uniprotkb">
+            <att name="altid.uniprotkb" type="string" value="cdn1c_human"/>
+            <att name="altid.uniprotkb" type="string" value="Cyclin-dependent kinase inhibitor p57"/>
+            <att name="altid.uniprotkb" type="string" value="p57Kip2"/>
+            <att name="altid.uniprotkb" type="string" value="KIP2"/>
+        </att>
+        <att name="canonicalName" type="string" value="CDKN1C"/>
+        <att name="alias.uniprotkb" type="string" value="CDKN1C"/>
+        <att name="id.intact" type="string" value="EBI-519256"/>
+        <att name="altid.irefindex" type="string" value="FkpEQlmehOv6kW0swwkhG0cbOko9606"/>
+        <att name="id.uniprotkb" type="string" value="P49918"/>
+        <att name="taxid" type="string" value="9606"/>
+        <att name="gene name" value="CDKN1C"/>
+        <att name="identifier type" value="uniprotkb"/>
+        <att name="identifier" value="P49918"/>
+        <att name="altid.uniprotkb">
+            <att name="altid.uniprotkb" type="string" value="cdn1c_human"/>
+            <att name="altid.uniprotkb" type="string" value="Cyclin-dependent kinase inhibitor p57"/>
+            <att name="altid.uniprotkb" type="string" value="p57Kip2"/>
+            <att name="altid.uniprotkb" type="string" value="KIP2"/>
+        </att>
+        <att name="canonicalName" type="string" value="CDKN1C"/>
+        <att name="alias.uniprotkb" type="string" value="CDKN1C"/>
+        <att name="id.intact" type="string" value="EBI-519256"/>
+        <att name="altid.irefindex" type="string" value="FkpEQlmehOv6kW0swwkhG0cbOko9606"/>
+        <att name="id.uniprotkb" type="string" value="P49918"/>
+        <att name="taxid" type="string" value="9606"/>
+        <graphics type="ellipse" fill="#ffffff" outline="#282828" width="3" w="45.0" h="25.0" x="0.0" y="0.0">
+            <att name="cytoscapeNodeGraphicsAttributes">
+                <att name="nodeLabelFont" value="Default-0-12"/>
+            </att>
+        </graphics>
+    </node>
+    <edge label="CCNE2 (EBI-1245812) CDKN1C" source="2" target="5">
+        <att name="pubauth.author" type="string" value="Zariwala et al. (1998)"/>
+        <att name="type.psi-mi" type="string" value="MI:0915"/>
+        <att name="source.psi-mi" type="string" value="MI:0469"/>
+        <att name="id.intact" type="string" value="EBI-1245812"/>
+        <att name="id.irefindex" type="string" value="gGY8H38eX0nuFhAcUP1YrC3dDOk"/>
+        <att name="pubid.pubmed" type="string" value="9840943"/>
+        <att name="detmethod.psi-mi" type="string" value="MI:0018"/>
+        <att name="confidence.intact confidence" type="string" value="0.50"/>
+        <att name="pubauth.author" type="string" value="Zariwala et al. (1998)"/>
+        <att name="type.psi-mi" type="string" value="MI:0915"/>
+        <att name="source.psi-mi" type="string" value="MI:0469"/>
+        <att name="id.intact" type="string" value="EBI-1245812"/>
+        <att name="id.irefindex" type="string" value="gGY8H38eX0nuFhAcUP1YrC3dDOk"/>
+        <att name="pubid.pubmed" type="string" value="9840943"/>
+        <att name="detmethod.psi-mi" type="string" value="MI:0018"/>
+        <att name="confidence.intact confidence" type="string" value="0.50"/>
+    </edge>
+    <node id="6" label="RBL2">
+        <att name="gene name" value="RBL2"/>
+        <att name="identifier type" value="uniprotkb"/>
+        <att name="identifier" value="Q08999"/>
+        <att name="altid.uniprotkb">
+            <att name="altid.uniprotkb" type="string" value="Retinoblastoma-related protein 2"/>
+            <att name="altid.uniprotkb" type="string" value="RB2"/>
+            <att name="altid.uniprotkb" type="string" value="rbl2_human"/>
+            <att name="altid.uniprotkb" type="string" value="130 kDa retinoblastoma-associated protein"/>
+            <att name="altid.uniprotkb" type="string" value="pRb2"/>
+        </att>
+        <att name="canonicalName" type="string" value="RBL2"/>
+        <att name="alias.uniprotkb" type="string" value="RBL2"/>
+        <att name="id.intact" type="string" value="EBI-971439"/>
+        <att name="altid.irefindex" type="string" value="RnYVaqhetdJzJg820YzNHhWJWpQ9606"/>
+        <att name="id.uniprotkb" type="string" value="Q08999"/>
+        <att name="taxid" type="string" value="9606"/>
+        <att name="gene name" value="RBL2"/>
+        <att name="identifier type" value="uniprotkb"/>
+        <att name="identifier" value="Q08999"/>
+        <att name="altid.uniprotkb">
+            <att name="altid.uniprotkb" type="string" value="Retinoblastoma-related protein 2"/>
+            <att name="altid.uniprotkb" type="string" value="RB2"/>
+            <att name="altid.uniprotkb" type="string" value="rbl2_human"/>
+            <att name="altid.uniprotkb" type="string" value="130 kDa retinoblastoma-associated protein"/>
+            <att name="altid.uniprotkb" type="string" value="pRb2"/>
+        </att>
+        <att name="canonicalName" type="string" value="RBL2"/>
+        <att name="alias.uniprotkb" type="string" value="RBL2"/>
+        <att name="id.intact" type="string" value="EBI-971439"/>
+        <att name="altid.irefindex" type="string" value="RnYVaqhetdJzJg820YzNHhWJWpQ9606"/>
+        <att name="id.uniprotkb" type="string" value="Q08999"/>
+        <att name="taxid" type="string" value="9606"/>
+        <graphics type="ellipse" fill="#ffffff" outline="#282828" width="3" w="45.0" h="25.0" x="80.0" y="80.0">
+            <att name="cytoscapeNodeGraphicsAttributes">
+                <att name="nodeLabelFont" value="Default-0-12"/>
+            </att>
+        </graphics>
+    </node>
+    <edge label="RBL2 (EBI-1389763) CCNE2" source="6" target="2">
+        <att name="pubauth.author" type="string" value="Litovchick et al. (2007)"/>
+        <att name="type.psi-mi" type="string" value="MI:0914"/>
+        <att name="source.psi-mi" type="string" value="MI:0469"/>
+        <att name="id.intact" type="string" value="EBI-1389763"/>
+        <att name="id.irefindex" type="string" value="ll0EaZQ+yI0SSTNK0lycP59b+Rc"/>
+        <att name="pubid.pubmed" type="string" value="17531812"/>
+        <att name="detmethod.psi-mi" type="string" value="MI:0007"/>
+        <att name="pubauth.author" type="string" value="Litovchick et al. (2007)"/>
+        <att name="type.psi-mi" type="string" value="MI:0914"/>
+        <att name="source.psi-mi" type="string" value="MI:0469"/>
+        <att name="id.intact" type="string" value="EBI-1389763"/>
+        <att name="id.irefindex" type="string" value="ll0EaZQ+yI0SSTNK0lycP59b+Rc"/>
+        <att name="pubid.pubmed" type="string" value="17531812"/>
+        <att name="detmethod.psi-mi" type="string" value="MI:0007"/>
+    </edge>
+    <edge label="RBL2 (EBI-1389907) CCNE2" source="6" target="2">
+        <att name="pubauth.author" type="string" value="Litovchick et al. (2007)"/>
+        <att name="type.psi-mi" type="string" value="MI:0914"/>
+        <att name="source.psi-mi" type="string" value="MI:0469"/>
+        <att name="id.intact" type="string" value="EBI-1389907"/>
+        <att name="id.irefindex" type="string" value="ll0EaZQ+yI0SSTNK0lycP59b+Rc"/>
+        <att name="pubid.pubmed" type="string" value="17531812"/>
+        <att name="detmethod.psi-mi" type="string" value="MI:0006"/>
+        <att name="pubauth.author" type="string" value="Litovchick et al. (2007)"/>
+        <att name="type.psi-mi" type="string" value="MI:0914"/>
+        <att name="source.psi-mi" type="string" value="MI:0469"/>
+        <att name="id.intact" type="string" value="EBI-1389907"/>
+        <att name="id.irefindex" type="string" value="ll0EaZQ+yI0SSTNK0lycP59b+Rc"/>
+        <att name="pubid.pubmed" type="string" value="17531812"/>
+        <att name="detmethod.psi-mi" type="string" value="MI:0006"/>
+    </edge>
+    <edge label="RBL2 (EBI-1390043) CCNE2" source="6" target="2">
+        <att name="pubauth.author" type="string" value="Litovchick et al. (2007)"/>
+        <att name="type.psi-mi" type="string" value="MI:0914"/>
+        <att name="source.psi-mi" type="string" value="MI:0469"/>
+        <att name="id.intact" type="string" value="EBI-1390043"/>
+        <att name="id.irefindex" type="string" value="ll0EaZQ+yI0SSTNK0lycP59b+Rc"/>
+        <att name="pubid.pubmed" type="string" value="17531812"/>
+        <att name="detmethod.psi-mi" type="string" value="MI:0006"/>
+        <att name="pubauth.author" type="string" value="Litovchick et al. (2007)"/>
+        <att name="type.psi-mi" type="string" value="MI:0914"/>
+        <att name="source.psi-mi" type="string" value="MI:0469"/>
+        <att name="id.intact" type="string" value="EBI-1390043"/>
+        <att name="id.irefindex" type="string" value="ll0EaZQ+yI0SSTNK0lycP59b+Rc"/>
+        <att name="pubid.pubmed" type="string" value="17531812"/>
+        <att name="detmethod.psi-mi" type="string" value="MI:0006"/>
+    </edge>
+    <node id="12" label="ORC3">
+        <att name="gene name" value="ORC3"/>
+        <att name="identifier type" value="uniprotkb"/>
+        <att name="identifier" value="Q9UBD5"/>
+        <att name="altid.uniprotkb">
+            <att name="altid.uniprotkb" type="string" value="LATHEO"/>
+            <att name="altid.uniprotkb" type="string" value="ORC3L"/>
+            <att name="altid.uniprotkb" type="string" value="orc3_human"/>
+            <att name="altid.uniprotkb" type="string" value="Origin recognition complex subunit Latheo"/>
+        </att>
+        <att name="canonicalName" type="string" value="ORC3"/>
+        <att name="alias.uniprotkb" type="string" value="ORC3"/>
+        <att name="id.intact" type="string" value="EBI-374916"/>
+        <att name="altid.irefindex" type="string" value="yb54V99BlBVm3+pJa90wUZ4Ktr49606"/>
+        <att name="id.uniprotkb" type="string" value="Q9UBD5"/>
+        <att name="taxid" type="string" value="9606"/>
+        <att name="gene name" value="ORC3"/>
+        <att name="identifier type" value="uniprotkb"/>
+        <att name="identifier" value="Q9UBD5"/>
+        <att name="altid.uniprotkb">
+            <att name="altid.uniprotkb" type="string" value="LATHEO"/>
+            <att name="altid.uniprotkb" type="string" value="ORC3L"/>
+            <att name="altid.uniprotkb" type="string" value="orc3_human"/>
+            <att name="altid.uniprotkb" type="string" value="Origin recognition complex subunit Latheo"/>
+        </att>
+        <att name="canonicalName" type="string" value="ORC3"/>
+        <att name="alias.uniprotkb" type="string" value="ORC3"/>
+        <att name="id.intact" type="string" value="EBI-374916"/>
+        <att name="altid.irefindex" type="string" value="yb54V99BlBVm3+pJa90wUZ4Ktr49606"/>
+        <att name="id.uniprotkb" type="string" value="Q9UBD5"/>
+        <att name="taxid" type="string" value="9606"/>
+        <graphics type="ellipse" fill="#ffffff" outline="#282828" width="3" w="45.0" h="25.0" x="0.0" y="160.0">
+            <att name="cytoscapeNodeGraphicsAttributes">
+                <att name="nodeLabelFont" value="Default-0-12"/>
+            </att>
+        </graphics>
+    </node>
+    <edge label="ORC3 (EBI-375245) CCNE2" source="12" target="2">
+        <att name="pubauth.author" type="string" value="Ramachandran et al. (2004)"/>
+        <att name="type.psi-mi" type="string" value="MI:0407"/>
+        <att name="source.psi-mi" type="string" value="MI:0469"/>
+        <att name="id.intact" type="string" value="EBI-375245"/>
+        <att name="id.irefindex" type="string" value="VtplPAB6jTyVMYrYZNsL1Kx/014"/>
+        <att name="pubid.pubmed" type="string" value="15232106"/>
+        <att name="detmethod.psi-mi" type="string" value="MI:0089"/>
+        <att name="confidence.intact confidence" type="string" value="0.50"/>
+        <att name="pubauth.author" type="string" value="Ramachandran et al. (2004)"/>
+        <att name="type.psi-mi" type="string" value="MI:0407"/>
+        <att name="source.psi-mi" type="string" value="MI:0469"/>
+        <att name="id.intact" type="string" value="EBI-375245"/>
+        <att name="id.irefindex" type="string" value="VtplPAB6jTyVMYrYZNsL1Kx/014"/>
+        <att name="pubid.pubmed" type="string" value="15232106"/>
+        <att name="detmethod.psi-mi" type="string" value="MI:0089"/>
+        <att name="confidence.intact confidence" type="string" value="0.50"/>
+    </edge>
+    <node id="14" label="CDKN1B">
+        <att name="gene name" value="CDKN1B"/>
+        <att name="identifier type" value="uniprotkb"/>
+        <att name="identifier" value="P46527"/>
+        <att name="altid.uniprotkb">
+            <att name="altid.uniprotkb" type="string" value="KIP1"/>
+            <att name="altid.uniprotkb" type="string" value="Cyclin-dependent kinase inhibitor p27"/>
+            <att name="altid.uniprotkb" type="string" value="cdn1b_human"/>
+            <att name="altid.uniprotkb" type="string" value="p27Kip1"/>
+        </att>
+        <att name="canonicalName" type="string" value="CDKN1B"/>
+        <att name="alias.uniprotkb" type="string" value="CDKN1B"/>
+        <att name="id.intact" type="string" value="EBI-519280"/>
+        <att name="altid.irefindex" type="string" value="BENMHvi+EuorB6Y5p3rhPzkMrm89606"/>
+        <att name="id.uniprotkb" type="string" value="P46527"/>
+        <att name="taxid" type="string" value="9606"/>
+        <att name="gene name" value="CDKN1B"/>
+        <att name="identifier type" value="uniprotkb"/>
+        <att name="identifier" value="P46527"/>
+        <att name="altid.uniprotkb">
+            <att name="altid.uniprotkb" type="string" value="KIP1"/>
+            <att name="altid.uniprotkb" type="string" value="Cyclin-dependent kinase inhibitor p27"/>
+            <att name="altid.uniprotkb" type="string" value="cdn1b_human"/>
+            <att name="altid.uniprotkb" type="string" value="p27Kip1"/>
+        </att>
+        <att name="canonicalName" type="string" value="CDKN1B"/>
+        <att name="alias.uniprotkb" type="string" value="CDKN1B"/>
+        <att name="id.intact" type="string" value="EBI-519280"/>
+        <att name="altid.irefindex" type="string" value="BENMHvi+EuorB6Y5p3rhPzkMrm89606"/>
+        <att name="id.uniprotkb" type="string" value="P46527"/>
+        <att name="taxid" type="string" value="9606"/>
+        <graphics type="ellipse" fill="#ffffff" outline="#282828" width="3" w="45.0" h="25.0" x="0.0" y="80.0">
+            <att name="cytoscapeNodeGraphicsAttributes">
+                <att name="nodeLabelFont" value="Default-0-12"/>
+            </att>
+        </graphics>
+    </node>
+    <edge label="CDKN1B (EBI-1245805) CCNE2" source="14" target="2">
+        <att name="pubauth.author" type="string" value="Zariwala et al. (1998)"/>
+        <att name="type.psi-mi" type="string" value="MI:0915"/>
+        <att name="source.psi-mi" type="string" value="MI:0469"/>
+        <att name="id.intact" type="string" value="EBI-1245805"/>
+        <att name="id.irefindex" type="string" value="h5cn3qCx6y8XZlDezcCr2aLwdMg"/>
+        <att name="pubid.pubmed" type="string" value="9840943"/>
+        <att name="detmethod.psi-mi" type="string" value="MI:0018"/>
+        <att name="confidence.intact confidence" type="string" value="0.51"/>
+        <att name="pubauth.author" type="string" value="Zariwala et al. (1998)"/>
+        <att name="type.psi-mi" type="string" value="MI:0915"/>
+        <att name="source.psi-mi" type="string" value="MI:0469"/>
+        <att name="id.intact" type="string" value="EBI-1245805"/>
+        <att name="id.irefindex" type="string" value="h5cn3qCx6y8XZlDezcCr2aLwdMg"/>
+        <att name="pubid.pubmed" type="string" value="9840943"/>
+        <att name="detmethod.psi-mi" type="string" value="MI:0018"/>
+        <att name="confidence.intact confidence" type="string" value="0.51"/>
+    </edge>
+    <edge label="CCNE2 (EBI-1245823) CDKN1B" source="2" target="14">
+        <att name="pubauth.author" type="string" value="Zariwala et al. (1998)"/>
+        <att name="type.psi-mi" type="string" value="MI:0915"/>
+        <att name="source.psi-mi" type="string" value="MI:0469"/>
+        <att name="id.intact" type="string" value="EBI-1245823"/>
+        <att name="id.irefindex" type="string" value="h5cn3qCx6y8XZlDezcCr2aLwdMg"/>
+        <att name="pubid.pubmed" type="string" value="9840943"/>
+        <att name="detmethod.psi-mi" type="string" value="MI:0006"/>
+        <att name="confidence.intact confidence" type="string" value="0.51"/>
+        <att name="pubauth.author" type="string" value="Zariwala et al. (1998)"/>
+        <att name="type.psi-mi" type="string" value="MI:0915"/>
+        <att name="source.psi-mi" type="string" value="MI:0469"/>
+        <att name="id.intact" type="string" value="EBI-1245823"/>
+        <att name="id.irefindex" type="string" value="h5cn3qCx6y8XZlDezcCr2aLwdMg"/>
+        <att name="pubid.pubmed" type="string" value="9840943"/>
+        <att name="detmethod.psi-mi" type="string" value="MI:0006"/>
+        <att name="confidence.intact confidence" type="string" value="0.51"/>
+    </edge>
+    <node id="18" label="Cdk2">
+        <att name="gene name" value="Cdk2"/>
+        <att name="identifier type" value="uniprotkb"/>
+        <att name="identifier" value="P97377"/>
+        <att name="altid.uniprotkb">
+            <att name="altid.uniprotkb" type="string" value="Cell division protein kinase 2"/>
+            <att name="altid.uniprotkb" type="string" value="Cdkn2"/>
+            <att name="altid.uniprotkb" type="string" value="cdk2_mouse"/>
+        </att>
+        <att name="canonicalName" type="string" value="Cdk2"/>
+        <att name="alias.uniprotkb" type="string" value="Cdk2"/>
+        <att name="id.intact" type="string" value="EBI-847048"/>
+        <att name="altid.irefindex" type="string" value="VmZRyXMBAUdvXSq1Zq5rUxtUBOw10090"/>
+        <att name="id.uniprotkb" type="string" value="P97377"/>
+        <att name="taxid" type="string" value="10090"/>
+        <att name="gene name" value="Cdk2"/>
+        <att name="identifier type" value="uniprotkb"/>
+        <att name="identifier" value="P97377"/>
+        <att name="altid.uniprotkb">
+            <att name="altid.uniprotkb" type="string" value="Cell division protein kinase 2"/>
+            <att name="altid.uniprotkb" type="string" value="Cdkn2"/>
+            <att name="altid.uniprotkb" type="string" value="cdk2_mouse"/>
+        </att>
+        <att name="canonicalName" type="string" value="Cdk2"/>
+        <att name="alias.uniprotkb" type="string" value="Cdk2"/>
+        <att name="id.intact" type="string" value="EBI-847048"/>
+        <att name="altid.irefindex" type="string" value="VmZRyXMBAUdvXSq1Zq5rUxtUBOw10090"/>
+        <att name="id.uniprotkb" type="string" value="P97377"/>
+        <att name="taxid" type="string" value="10090"/>
+        <graphics type="ellipse" fill="#ffffff" outline="#282828" width="3" w="45.0" h="25.0" x="240.0" y="80.0">
+            <att name="cytoscapeNodeGraphicsAttributes">
+                <att name="nodeLabelFont" value="Default-0-12"/>
+            </att>
+        </graphics>
+    </node>
+    <node id="19" label="Ccne2">
+        <att name="gene name" value="Ccne2"/>
+        <att name="identifier type" value="uniprotkb"/>
+        <att name="identifier" value="Q9Z238"/>
+        <att name="altid.uniprotkb" type="string" value="ccne2_mouse"/>
+        <att name="canonicalName" type="string" value="Ccne2"/>
+        <att name="alias.uniprotkb" type="string" value="Ccne2"/>
+        <att name="id.intact" type="string" value="EBI-847421"/>
+        <att name="altid.irefindex" type="string" value="ynMyP6cr6rpQEK4JXaeGor3CJvc10090"/>
+        <att name="id.uniprotkb" type="string" value="Q9Z238"/>
+        <att name="taxid" type="string" value="10090"/>
+        <att name="gene name" value="Ccne2"/>
+        <att name="identifier type" value="uniprotkb"/>
+        <att name="identifier" value="Q9Z238"/>
+        <att name="altid.uniprotkb" type="string" value="ccne2_mouse"/>
+        <att name="canonicalName" type="string" value="Ccne2"/>
+        <att name="alias.uniprotkb" type="string" value="Ccne2"/>
+        <att name="id.intact" type="string" value="EBI-847421"/>
+        <att name="altid.irefindex" type="string" value="ynMyP6cr6rpQEK4JXaeGor3CJvc10090"/>
+        <att name="id.uniprotkb" type="string" value="Q9Z238"/>
+        <att name="taxid" type="string" value="10090"/>
+        <graphics type="ellipse" fill="#ffffff" outline="#282828" width="3" w="45.0" h="25.0" x="160.0" y="0.0">
+            <att name="cytoscapeNodeGraphicsAttributes">
+                <att name="nodeLabelFont" value="Default-0-12"/>
+            </att>
+        </graphics>
+    </node>
+    <edge label="Cdk2 (EBI-847432) Ccne2" source="18" target="19">
+        <att name="type.psi-mi" type="string" value="MI:0407"/>
+        <att name="source.psi-mi" type="string" value="MI:0469"/>
+        <att name="id.intact" type="string" value="EBI-847432"/>
+        <att name="id.irefindex" type="string" value="iwmPu45ObGosFUjFFhqgBO2Cd3U"/>
+        <att name="pubid.pubmed" type="string" value="14681455"/>
+        <att name="detmethod.psi-mi" type="string" value="MI:0364"/>
+        <att name="confidence.intact confidence" type="string" value="0.98"/>
+        <att name="type.psi-mi" type="string" value="MI:0407"/>
+        <att name="source.psi-mi" type="string" value="MI:0469"/>
+        <att name="id.intact" type="string" value="EBI-847432"/>
+        <att name="id.irefindex" type="string" value="iwmPu45ObGosFUjFFhqgBO2Cd3U"/>
+        <att name="pubid.pubmed" type="string" value="14681455"/>
+        <att name="detmethod.psi-mi" type="string" value="MI:0364"/>
+        <att name="confidence.intact confidence" type="string" value="0.98"/>
+    </edge>
+    <edge label="Cdk2 (EBI-847695) Ccne2" source="18" target="19">
+        <att name="type.psi-mi" type="string" value="MI:0407"/>
+        <att name="source.psi-mi" type="string" value="MI:0469"/>
+        <att name="id.intact" type="string" value="EBI-847695"/>
+        <att name="id.irefindex" type="string" value="dhUXVZil3gPJOSGixm6pxT6P7eA"/>
+        <att name="pubid.pubmed" type="string" value="14681455"/>
+        <att name="detmethod.psi-mi" type="string" value="MI:0364"/>
+        <att name="type.psi-mi" type="string" value="MI:0407"/>
+        <att name="source.psi-mi" type="string" value="MI:0469"/>
+        <att name="id.intact" type="string" value="EBI-847695"/>
+        <att name="id.irefindex" type="string" value="dhUXVZil3gPJOSGixm6pxT6P7eA"/>
+        <att name="pubid.pubmed" type="string" value="14681455"/>
+        <att name="detmethod.psi-mi" type="string" value="MI:0364"/>
+    </edge>
+    <node id="22" label="CDKN1A">
+        <att name="gene name" value="CDKN1A"/>
+        <att name="identifier type" value="uniprotkb"/>
+        <att name="identifier" value="P38936"/>
+        <att name="altid.uniprotkb">
+            <att name="altid.uniprotkb" type="string" value="CDK-interacting protein 1"/>
+            <att name="altid.uniprotkb" type="string" value="MDA6"/>
+            <att name="altid.uniprotkb" type="string" value="CDKN1"/>
+            <att name="altid.uniprotkb" type="string" value="WAF1"/>
+            <att name="altid.uniprotkb" type="string" value="cdn1a_human"/>
+            <att name="altid.uniprotkb" type="string" value="CAP20"/>
+            <att name="altid.uniprotkb" type="string" value="PIC1"/>
+            <att name="altid.uniprotkb" type="string" value="SDI1"/>
+            <att name="altid.uniprotkb" type="string" value="p21"/>
+            <att name="altid.uniprotkb" type="string" value="CIP1"/>
+            <att name="altid.uniprotkb" type="string" value="Melanoma differentiation-associated protein 6"/>
+        </att>
+        <att name="canonicalName" type="string" value="CDKN1A"/>
+        <att name="alias.uniprotkb" type="string" value="CDKN1A"/>
+        <att name="id.intact" type="string" value="EBI-375077"/>
+        <att name="altid.irefindex" type="string" value="j5St3QkqbKmEhenFS1+GIiYGNPs9606"/>
+        <att name="id.uniprotkb" type="string" value="P38936"/>
+        <att name="taxid" type="string" value="9606"/>
+        <att name="gene name" value="CDKN1A"/>
+        <att name="identifier type" value="uniprotkb"/>
+        <att name="identifier" value="P38936"/>
+        <att name="altid.uniprotkb">
+            <att name="altid.uniprotkb" type="string" value="CDK-interacting protein 1"/>
+            <att name="altid.uniprotkb" type="string" value="MDA6"/>
+            <att name="altid.uniprotkb" type="string" value="CDKN1"/>
+            <att name="altid.uniprotkb" type="string" value="WAF1"/>
+            <att name="altid.uniprotkb" type="string" value="cdn1a_human"/>
+            <att name="altid.uniprotkb" type="string" value="CAP20"/>
+            <att name="altid.uniprotkb" type="string" value="PIC1"/>
+            <att name="altid.uniprotkb" type="string" value="SDI1"/>
+            <att name="altid.uniprotkb" type="string" value="p21"/>
+            <att name="altid.uniprotkb" type="string" value="CIP1"/>
+            <att name="altid.uniprotkb" type="string" value="Melanoma differentiation-associated protein 6"/>
+        </att>
+        <att name="canonicalName" type="string" value="CDKN1A"/>
+        <att name="alias.uniprotkb" type="string" value="CDKN1A"/>
+        <att name="id.intact" type="string" value="EBI-375077"/>
+        <att name="altid.irefindex" type="string" value="j5St3QkqbKmEhenFS1+GIiYGNPs9606"/>
+        <att name="id.uniprotkb" type="string" value="P38936"/>
+        <att name="taxid" type="string" value="9606"/>
+        <graphics type="ellipse" fill="#ffffff" outline="#282828" width="3" w="45.0" h="25.0" x="240.0" y="0.0">
+            <att name="cytoscapeNodeGraphicsAttributes">
+                <att name="nodeLabelFont" value="Default-0-12"/>
+            </att>
+        </graphics>
+    </node>
+    <edge label="CDKN1A (EBI-1245797) CCNE2" source="22" target="2">
+        <att name="pubauth.author" type="string" value="Zariwala et al. (1998)"/>
+        <att name="type.psi-mi" type="string" value="MI:0915"/>
+        <att name="source.psi-mi" type="string" value="MI:0469"/>
+        <att name="id.intact" type="string" value="EBI-1245797"/>
+        <att name="id.irefindex" type="string" value="q2QJzz3Ftu28S//90ZzfWfRoqwY"/>
+        <att name="pubid.pubmed" type="string" value="9840943"/>
+        <att name="detmethod.psi-mi" type="string" value="MI:0018"/>
+        <att name="confidence.intact confidence" type="string" value="0.51"/>
+        <att name="pubauth.author" type="string" value="Zariwala et al. (1998)"/>
+        <att name="type.psi-mi" type="string" value="MI:0915"/>
+        <att name="source.psi-mi" type="string" value="MI:0469"/>
+        <att name="id.intact" type="string" value="EBI-1245797"/>
+        <att name="id.irefindex" type="string" value="q2QJzz3Ftu28S//90ZzfWfRoqwY"/>
+        <att name="pubid.pubmed" type="string" value="9840943"/>
+        <att name="detmethod.psi-mi" type="string" value="MI:0018"/>
+        <att name="confidence.intact confidence" type="string" value="0.51"/>
+    </edge>
+    <edge label="CDKN1A (EBI-375335) CCNE2" source="22" target="2">
+        <att name="pubauth.author" type="string" value="Ramachandran et al. (2004)"/>
+        <att name="type.psi-mi" type="string" value="MI:0407"/>
+        <att name="source.psi-mi" type="string" value="MI:0469"/>
+        <att name="id.intact" type="string" value="EBI-375335"/>
+        <att name="id.irefindex" type="string" value="q2QJzz3Ftu28S//90ZzfWfRoqwY"/>
+        <att name="pubid.pubmed" type="string" value="15232106"/>
+        <att name="detmethod.psi-mi" type="string" value="MI:0089"/>
+        <att name="confidence.intact confidence" type="string" value="0.51"/>
+        <att name="pubauth.author" type="string" value="Ramachandran et al. (2004)"/>
+        <att name="type.psi-mi" type="string" value="MI:0407"/>
+        <att name="source.psi-mi" type="string" value="MI:0469"/>
+        <att name="id.intact" type="string" value="EBI-375335"/>
+        <att name="id.irefindex" type="string" value="q2QJzz3Ftu28S//90ZzfWfRoqwY"/>
+        <att name="pubid.pubmed" type="string" value="15232106"/>
+        <att name="detmethod.psi-mi" type="string" value="MI:0089"/>
+        <att name="confidence.intact confidence" type="string" value="0.51"/>
+    </edge>
+    <node id="27" label="CDK2">
+        <att name="gene name" value="CDK2"/>
+        <att name="identifier type" value="uniprotkb"/>
+        <att name="identifier" value="P24941"/>
+        <att name="altid.uniprotkb">
+            <att name="altid.uniprotkb" type="string" value="CDKN2"/>
+            <att name="altid.uniprotkb" type="string" value="p33 protein kinase"/>
+            <att name="altid.uniprotkb" type="string" value="cdk2_human"/>
+            <att name="altid.uniprotkb" type="string" value="Cell division protein kinase 2"/>
+        </att>
+        <att name="canonicalName" type="string" value="CDK2"/>
+        <att name="alias.uniprotkb" type="string" value="CDK2"/>
+        <att name="id.intact" type="string" value="EBI-375096"/>
+        <att name="altid.irefindex" type="string" value="VyK/ZjVpl7pw5pgZUPsLEzor2qc9606"/>
+        <att name="id.uniprotkb" type="string" value="P24941"/>
+        <att name="taxid" type="string" value="9606"/>
+        <att name="gene name" value="CDK2"/>
+        <att name="identifier type" value="uniprotkb"/>
+        <att name="identifier" value="P24941"/>
+        <att name="altid.uniprotkb">
+            <att name="altid.uniprotkb" type="string" value="CDKN2"/>
+            <att name="altid.uniprotkb" type="string" value="p33 protein kinase"/>
+            <att name="altid.uniprotkb" type="string" value="cdk2_human"/>
+            <att name="altid.uniprotkb" type="string" value="Cell division protein kinase 2"/>
+        </att>
+        <att name="canonicalName" type="string" value="CDK2"/>
+        <att name="alias.uniprotkb" type="string" value="CDK2"/>
+        <att name="id.intact" type="string" value="EBI-375096"/>
+        <att name="altid.irefindex" type="string" value="VyK/ZjVpl7pw5pgZUPsLEzor2qc9606"/>
+        <att name="id.uniprotkb" type="string" value="P24941"/>
+        <att name="taxid" type="string" value="9606"/>
+        <graphics type="ellipse" fill="#ffffff" outline="#282828" width="3" w="45.0" h="25.0" x="160.0" y="80.0">
+            <att name="cytoscapeNodeGraphicsAttributes">
+                <att name="nodeLabelFont" value="Default-0-12"/>
+            </att>
+        </graphics>
+    </node>
+    <edge label="CCNE2 (EBI-1245683) CDK2" source="2" target="27">
+        <att name="pubauth.author" type="string" value="Zariwala et al. (1998)"/>
+        <att name="type.psi-mi" type="string" value="MI:0915"/>
+        <att name="source.psi-mi" type="string" value="MI:0469"/>
+        <att name="id.intact" type="string" value="EBI-1245683"/>
+        <att name="id.irefindex" type="string" value="0K/49CuUckJGvex3Ci5lYQtRHao"/>
+        <att name="pubid.pubmed" type="string" value="9840943"/>
+        <att name="detmethod.psi-mi" type="string" value="MI:0018"/>
+        <att name="confidence.intact confidence" type="string" value="0.97"/>
+        <att name="pubauth.author" type="string" value="Zariwala et al. (1998)"/>
+        <att name="type.psi-mi" type="string" value="MI:0915"/>
+        <att name="source.psi-mi" type="string" value="MI:0469"/>
+        <att name="id.intact" type="string" value="EBI-1245683"/>
+        <att name="id.irefindex" type="string" value="0K/49CuUckJGvex3Ci5lYQtRHao"/>
+        <att name="pubid.pubmed" type="string" value="9840943"/>
+        <att name="detmethod.psi-mi" type="string" value="MI:0018"/>
+        <att name="confidence.intact confidence" type="string" value="0.97"/>
+    </edge>
+    <edge label="CDK2 (EBI-1245754) CCNE2" source="27" target="2">
+        <att name="pubauth.author" type="string" value="Zariwala et al. (1998)"/>
+        <att name="type.psi-mi" type="string" value="MI:0915"/>
+        <att name="source.psi-mi" type="string" value="MI:0469"/>
+        <att name="id.intact" type="string" value="EBI-1245754"/>
+        <att name="id.irefindex" type="string" value="0K/49CuUckJGvex3Ci5lYQtRHao"/>
+        <att name="pubid.pubmed" type="string" value="9840943"/>
+        <att name="detmethod.psi-mi" type="string" value="MI:0018"/>
+        <att name="confidence.intact confidence" type="string" value="0.97"/>
+        <att name="pubauth.author" type="string" value="Zariwala et al. (1998)"/>
+        <att name="type.psi-mi" type="string" value="MI:0915"/>
+        <att name="source.psi-mi" type="string" value="MI:0469"/>
+        <att name="id.intact" type="string" value="EBI-1245754"/>
+        <att name="id.irefindex" type="string" value="0K/49CuUckJGvex3Ci5lYQtRHao"/>
+        <att name="pubid.pubmed" type="string" value="9840943"/>
+        <att name="detmethod.psi-mi" type="string" value="MI:0018"/>
+        <att name="confidence.intact confidence" type="string" value="0.97"/>
+    </edge>
+    <edge label="CCNE2 (EBI-1245790) CDK2" source="2" target="27">
+        <att name="pubauth.author" type="string" value="Zariwala et al. (1998)"/>
+        <att name="type.psi-mi" type="string" value="MI:0915"/>
+        <att name="source.psi-mi" type="string" value="MI:0469"/>
+        <att name="id.intact" type="string" value="EBI-1245790"/>
+        <att name="id.irefindex" type="string" value="0K/49CuUckJGvex3Ci5lYQtRHao"/>
+        <att name="pubid.pubmed" type="string" value="9840943"/>
+        <att name="detmethod.psi-mi" type="string" value="MI:0006"/>
+        <att name="confidence.intact confidence" type="string" value="0.97"/>
+        <att name="pubauth.author" type="string" value="Zariwala et al. (1998)"/>
+        <att name="type.psi-mi" type="string" value="MI:0915"/>
+        <att name="source.psi-mi" type="string" value="MI:0469"/>
+        <att name="id.intact" type="string" value="EBI-1245790"/>
+        <att name="id.irefindex" type="string" value="0K/49CuUckJGvex3Ci5lYQtRHao"/>
+        <att name="pubid.pubmed" type="string" value="9840943"/>
+        <att name="detmethod.psi-mi" type="string" value="MI:0006"/>
+        <att name="confidence.intact confidence" type="string" value="0.97"/>
+    </edge>
+    <edge label="CCNE2 (EBI-1245840) CDK2" source="2" target="27">
+        <att name="pubauth.author" type="string" value="Zariwala et al. (1998)"/>
+        <att name="type.psi-mi" type="string" value="MI:0915"/>
+        <att name="source.psi-mi" type="string" value="MI:0469"/>
+        <att name="id.intact" type="string" value="EBI-1245840"/>
+        <att name="id.irefindex" type="string" value="0K/49CuUckJGvex3Ci5lYQtRHao"/>
+        <att name="pubid.pubmed" type="string" value="9840943"/>
+        <att name="detmethod.psi-mi" type="string" value="MI:0006"/>
+        <att name="confidence.intact confidence" type="string" value="0.97"/>
+        <att name="pubauth.author" type="string" value="Zariwala et al. (1998)"/>
+        <att name="type.psi-mi" type="string" value="MI:0915"/>
+        <att name="source.psi-mi" type="string" value="MI:0469"/>
+        <att name="id.intact" type="string" value="EBI-1245840"/>
+        <att name="id.irefindex" type="string" value="0K/49CuUckJGvex3Ci5lYQtRHao"/>
+        <att name="pubid.pubmed" type="string" value="9840943"/>
+        <att name="detmethod.psi-mi" type="string" value="MI:0006"/>
+        <att name="confidence.intact confidence" type="string" value="0.97"/>
+    </edge>
+    <edge label="CDK2 (EBI-375320) CCNE2" source="27" target="2">
+        <att name="pubauth.author" type="string" value="Ramachandran et al. (2004)"/>
+        <att name="type.psi-mi" type="string" value="MI:0407"/>
+        <att name="source.psi-mi" type="string" value="MI:0469"/>
+        <att name="id.intact" type="string" value="EBI-375320"/>
+        <att name="id.irefindex" type="string" value="0K/49CuUckJGvex3Ci5lYQtRHao"/>
+        <att name="pubid.pubmed" type="string" value="15232106"/>
+        <att name="detmethod.psi-mi" type="string" value="MI:0089"/>
+        <att name="confidence.intact confidence" type="string" value="0.97"/>
+        <att name="pubauth.author" type="string" value="Ramachandran et al. (2004)"/>
+        <att name="type.psi-mi" type="string" value="MI:0407"/>
+        <att name="source.psi-mi" type="string" value="MI:0469"/>
+        <att name="id.intact" type="string" value="EBI-375320"/>
+        <att name="id.irefindex" type="string" value="0K/49CuUckJGvex3Ci5lYQtRHao"/>
+        <att name="pubid.pubmed" type="string" value="15232106"/>
+        <att name="detmethod.psi-mi" type="string" value="MI:0089"/>
+        <att name="confidence.intact confidence" type="string" value="0.97"/>
+    </edge>
+    <edge label="CDK2 (EBI-768489) CCNE2" source="27" target="2">
+        <att name="type.psi-mi" type="string" value="MI:0407"/>
+        <att name="source.psi-mi" type="string" value="MI:0469"/>
+        <att name="id.intact" type="string" value="EBI-768489"/>
+        <att name="id.irefindex" type="string" value="0K/49CuUckJGvex3Ci5lYQtRHao"/>
+        <att name="pubid.pubmed" type="string" value="14681455"/>
+        <att name="detmethod.psi-mi" type="string" value="MI:0364"/>
+        <att name="confidence.intact confidence" type="string" value="0.97"/>
+        <att name="type.psi-mi" type="string" value="MI:0407"/>
+        <att name="source.psi-mi" type="string" value="MI:0469"/>
+        <att name="id.intact" type="string" value="EBI-768489"/>
+        <att name="id.irefindex" type="string" value="0K/49CuUckJGvex3Ci5lYQtRHao"/>
+        <att name="pubid.pubmed" type="string" value="14681455"/>
+        <att name="detmethod.psi-mi" type="string" value="MI:0364"/>
+        <att name="confidence.intact confidence" type="string" value="0.97"/>
+    </edge>
+</graph>
