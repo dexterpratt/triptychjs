@@ -86,23 +86,3 @@ TRIPTYCH.SpringForceLayoutEngine.prototype.updateNodePositions = function(){
 	}	
 };
 
-/*
-TRIPTYCH.MultiplaneLayoutEngine.prototype.updateNodePositions = function(){
-	for (var i in this.graph.nodes){
-		var node = this.graph.nodes[i];
-		var net = node.force.length();
-		
-		if (net > this.maxForce){
-			node.force.normalize();
-			node.force.multiplyScalar( this.maxForce * 0.5 );
-			node.force.z = 0;
-			node.position.addSelf(node.force);
-		} else if (net > 0.001){
-			node.force.multiplyScalar(this.damping);
-			node.force.z = 0;
-			node.position.addSelf(node.force);
-		}
-	}	
-};
-*/
-
