@@ -92,12 +92,23 @@ TRIPTYCH.HomologyVisualizer.prototype.initEdgeResources = function(node){
 			size: 4,
 			transparent: true
 		});
+		
+	this.selectedParticleMaterial = new THREE.ParticleBasicMaterial({
+			color: 0xFFFFFF,
+			map: homologyMap,
+			size: 8,
+			transparent: true
+		});
 
-	this.lineMaterial = new THREE.LineBasicMaterial( { color: 0xffffff, opacity: 0.5 } );
+	this.lineMaterial = new THREE.LineBasicMaterial( { color: 0xffffff, opacity: 1 } );
 	
 	this.redLineMaterial = new THREE.LineBasicMaterial( { color: 0xff2222, opacity: 1 } );
 	
 	this.greenLineMaterial = new THREE.LineBasicMaterial( { color: 0x22ff22, opacity: 1 } );
+	
+	this.thickRedLineMaterial = new THREE.LineBasicMaterial( { color: 0xffff00, opacity: 1 , linewidth: 2} );
+	
+	this.thickGreenLineMaterial = new THREE.LineBasicMaterial( { color: 0x00ffff, opacity: 1, linewidth: 2 } );
 };
 
 TRIPTYCH.BasicVisualizer.prototype.createDottedGeometry = function(numberOfDots){
@@ -107,9 +118,7 @@ TRIPTYCH.BasicVisualizer.prototype.createDottedGeometry = function(numberOfDots)
 	// create a line of particles in the z axis
 	for(var p = 0; p < numberOfDots; p++) {
 		
-		var pVertex = new THREE.Vertex(
-				new THREE.Vector3(0, 0, particleZ)
-			);
+		var pVertex = new THREE.Vertex(new THREE.Vector3(0, 0, particleZ));
 		
 		// add it to the geometry
 		geometry.vertices.push(pVertex);
@@ -132,6 +141,11 @@ TRIPTYCH.BasicVisualizer.prototype.updateEdge = function(edge){
 		{
 		case "homology":
 			this.scaleAndRotateEdge(edge, object);
+			if (edge.from.selected || edge.to.selected){
+				object.material = this.selectedParticleMaterial;
+			} else {
+				object.material = this.homologyParticleMaterial;
+			}
 			break;
 
 		default:
@@ -139,6 +153,19 @@ TRIPTYCH.BasicVisualizer.prototype.updateEdge = function(edge){
 			var toVertex = object.geometry.vertices[1];
 			fromVertex.position.copy(edge.from.position);
 			toVertex.position.copy(edge.to.position);
+			if (edge.from.selected || edge.to.selected){
+				if (edge.from.type == "HUGO"){
+					object.material = this.thickRedLineMaterial;
+				} else {
+					object.material = this.thickGreenLineMaterial;
+				}
+			} else {
+				if (edge.from.type == "HUGO"){
+					object.material = this.redLineMaterial;
+				} else {
+					object.material = this.greenLineMaterial;
+				}
+			}
 			object.geometry.__dirtyVertices = true;
 		}
 		
@@ -156,6 +183,7 @@ TRIPTYCH.HomologyVisualizer.prototype.makeEdgeObject = function(edge){
 		case "interacts":
 			if (edge.from.type == "HUGO"){
 				line = this.makeLine( edge.from.position, edge.to.position, this.redLineMaterial );
+			
 			} else {
 				line = this.makeLine( edge.from.position, edge.to.position, this.greenLineMaterial );
 			}
@@ -176,7 +204,7 @@ TRIPTYCH.HomologyVisualizer.prototype.makeBar = function(material){
 	return mesh;
 };
 
-TRIPTYCH.BasicVisualizer.prototype.scaleAndRotateEdge = function(edge, object, useMidpoint){
+TRIPTYCH.HomologyVisualizer.prototype.scaleAndRotateEdge = function(edge, object, useMidpoint){
 	// the object is always built to be scaled in Z and rotated align with the vertices
 	
 	// scale object in Z
