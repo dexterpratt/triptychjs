@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<!--
+
+   Copyright 2012 Dexter Pratt
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+-->
+
+<!--
+	Note that the above license applies only to this specific HTML file.
+	
+	The javascript libraries used by this file each have their own
+	licences.
+-->
+<head>
+	<title>Triptych.js Visualization of SPARQL Queries to SEC Data with WebGL</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="stylesheet" type="text/css" href="./css/sparql_demo.css" />
+
+	<script type="text/javascript" src="./jquery/jquery-1.7.1.min.js"></script>
+	
+	<script type="text/javascript" src="./three/Three.js"></script>
+
+	<script type="text/javascript" src="./three/RequestAnimationFrame.js"></script>
+
+	<script type="text/javascript" src="./triptych/Core/Triptych-1.1.3.js"></script>
+	
+	<script type="text/javascript" src="./triptych/SPARQL/TriptychSPARQL-1.1.2.js"></script>
+	
+	<script type="text/javascript" src="./triptych/Visualizer/WebGLVisualizer.js"></script>
+
+	<script type="text/javascript" src="./triptych/Controls/BasicControls-1.1.2.js"></script>
+
+	<script type="text/javascript" src="./triptych/LayoutEngine/ForceDirectedLayoutEngine-1.1.2.js"></script>
+
+</head>
+
+<body>
+
+	<div id="footer">
+		<div id="logo">
+			<a href="http://www.triptychjs.com"><img src="./img/triptych_logo_large_white.png" width=100%></a>
+		</div>
+		<div id="copyright">
+			<img  src="./img/copyright2012.png" width=100%>
+		</div>
+	</div>
+	
+	<div id="controls">
+		<span id="fly"><img  src="./img/fly_icon.png" width=100%></span>
+		<span id="zoom_in"><img  src="./img/zoom_in_icon.png" width=100%></span>
+		<span id="zoom_out"><img  src="./img/zoom_out_icon.png" width=100%></span>
+	</div>
+	
+	<div id="details">
+		<span id="expand"><img  src="./img/expand_icon.png" height=40>&nbsp;Expand</span>
+		<div id="hide_details">
+			<img  src="./img/close_icon.png" height=40>
+		</div>
+		<div id="detailsContent"></div>
+	</div>
+	
+	<script>
+		var start = Date.now();
+		var rate = 30; // Hz
+		var lastFrameNumber;
+		
+		var startingIdentifier; 
+		var endpointURL = "http://www.triptychjs.com/tc/openrdf-sesame/repositories/edgar_test";
+
+		var visualizer = new TRIPTYCH.WebGLVisualizer(), 
+		graph, 
+		layoutEngine = new TRIPTYCH.ForceDirectedLayoutEngine(), 
+		space, 
+		sparqlInterface = new TRIPTYCH.SPARQLInterface(endpointURL),
+		controls = new TRIPTYCH.BasicControls();
+		
+		//
+		// Set up the visualizer
+		//
+		visualizer.showEdgeLabels = false;
+		
+		//
+		// Set up the SPARQL interface
+		// 
+
+		sparqlInterface.namespaces = {
+					"id" : "http://www.rdfabout.com/rdf/usgov/sec/id/",
+					"dc" :	 "http://purl.org/dc/elements/1.1/",
+					"foaf"	: "http://xmlns.com/foaf/0.1/",
+					"sec" :	 "http://www.rdfabout.com/rdf/schema/ussec/",
+					"rdf" :	 "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+					"foafcorp"	: "http://xmlns.com/foaf/corp#",
+					"vcard" :	"http://www.w3.org/2001/vcard-rdf/3.0#",
+					"sd" : "http://www.triptychjs.com/triptychsite/sparql_demo/relationships#"
+		}
+		
+		startingCIK = "0000072971";
+
+		// 
+		// Set up translations for the node types
+		//
+		translator = new TRIPTYCH.GraphTranslator();
+		translator.namespaces = sparqlInterface.namespaces;
+		translator.addNodeTypeRule('http://xmlns.com/foaf/corp#Company', 'company');
+		translator.addNodeTypeRule('http://xmlns.com/foaf/0.1/Person', 'person');
+		// 
+		// Set up translations for the predicates
+		//		
+		translator.addPredicateRule('sd:hasPerson', 'hasPerson');
+		// 
+		// Set up node label rules
+		//			
+		translator.addNodeLabelRule('http://xmlns.com/foaf/corp#Company', 
+								function(node){
+									return node.getLiteral('foaf:name');
+								});
+								
+		translator.addNodeLabelRule('http://xmlns.com/foaf/0.1/Person', 
+								function(node){
+									var name = node.getLiteral('foaf:name');
+									if (name) {
+										var parts = name.split(" ");
+										var lastName = parts[0];
+										parts.shift();
+										parts.push(lastName);
+										return parts.join(" ");
+									}
+									return null;
+								});
+								
+		translator.addNodeLabelRule('default', 
+								function(node){
+									var pieces = node.identifier.split("#");
+									return pieces[pieces.length-1];
+								});	
+								
+		
+		sparqlInterface.loader.translator = translator;
+		
+		function main (){
+			// Check compatibility
+			if ( ! TRIPTYCH.EnvironmentDetector.webgl ) {
+				TRIPTYCH.EnvironmentDetector.addGetWebGLMessage();
+			} else {
+				run();
+			}
+		}
+		
+		//
+		// The query is primarily to find companies linked to 
+		// the starting point company via shared directors,
+		// but it also acquires the type information and
+		// all literal values for each person and company
+		//
+		
+		var companyConstructClause = "CONSTRUCT { ?company rdf:type foafcorp:Company . " +
+												" ?company ?p1 ?lit1 . " +
+												" ?person ?p2 ?lit2 . " +
+												" ?person rdf:type foaf:Person . " +
+												" ?company sd:hasPerson ?person . " +
+												" ?company2 ?p3 ?lit3 . " +
+												" ?company2 rdf:type foafcorp:Company . " +
+												" ?company2 sd:hasPerson ?person }";
+		
+		function makeCompanyWhereClause(cik){
+		
+			var conditions = " ?rel sec:corporation ?company . " +
+								" ?person sec:hasRelation ?rel . " +
+								" ?person sec:hasRelation ?rel2 . " +
+								" FILTER (!sameTerm(?rel, ?rel2)) . " +
+								" ?rel2 sec:corporation ?company2 . " +
+								" FILTER (!sameTerm(?company, ?company2)) . " +
+								" ?person rdf:type foaf:Person . " +
+								" ?company rdf:type foafcorp:Company . " +
+								" ?company2 rdf:type foafcorp:Company . " +
+								" OPTIONAL {?company ?p1 ?lit1 . FILTER isLiteral(?lit1)} . " +
+								" OPTIONAL {?person ?p2 ?lit2 . FILTER isLiteral(?lit2)} . " +
+								" OPTIONAL {?company2 ?p3 ?lit3 . FILTER isLiteral(?lit3)} }";
+											
+			return " WHERE { ?company sec:cik '" + cik + "' . " + conditions;
+		}
+
+		function run(){
+			//
+			// Make query to build initial graph, then
+			// initialize the Triptych Space and start the animation
+			//
+			sparqlInterface.construct(companyConstructClause, makeCompanyWhereClause(startingCIK), function(newGraph){
+				graph = newGraph;
+				var initialNodeList = graph.nodesByLiteral("sec:cik", startingCIK);
+				$.each(initialNodeList, function(index, node){
+					node.fetched = true;
+				});
+				space = new TRIPTYCH.Space(graph, visualizer, layoutEngine, controls);
+				space.init();
+				animate();
+			});
+			
+		}
+
+		function animate() {
+			requestAnimationFrame( animate );
+			var elapsed = Date.now() - start;
+			var frameNumber = Math.round(elapsed/(1000/rate));
+			//
+			// Check to see if it is time for the next update
+			//
+			if (frameNumber == lastFrameNumber) return;
+			lastFrameNumber = frameNumber;
+			space.update();	
+		}
+
+		//
+		// Perform a company based query and then merge the 
+		// resulting graph to the main displayed graph
+		//
+		function addBrowseGraph(node){
+			var cik = node.getLiteral("sec:cik");
+			if (cik){
+				if (node.type == "http://xmlns.com/foaf/corp#Company" || node.type == "company"){
+					sparqlInterface.construct(companyConstructClause, makeCompanyWhereClause(cik), function(newGraph){
+						layoutEngine.stopUpdating();
+						graph.addGraph(newGraph);
+						node.fetched = true;
+						//
+						// Run the layout engine to 
+						// adjust the graph to the
+						// added structure
+						//
+						hideDetails();
+						layoutEngine.startUpdating(200);
+					});
+				}
+			}
+		}
+		
+		TRIPTYCH.Node.prototype.onClick = function(event, role){
+			if (this.selected){
+				this.setSelected(false);
+			} else {
+				this.setSelected(true);
+			}
+			displayDetails(this);
+		}
+
+		//-------------------------------------
+		// Details 
+		//-------------------------------------
+		
+		$("#details").hide();
+	
+		var detailsDisplayed = false;
+		
+		function displayDetails(node){
+			if (!detailsDisplayed){
+	
+				$("#details").fadeIn(400);
+				detailsDisplayed = true;
+			}
+			detail_node = node;
+			
+			$("#detailsContent").html("<p>" + node.label + "<ul>");
+			
+			$.each(node.literals, function (predicate, value){
+				$("#detailsContent").append("<li>" + predicate + " : " + value + "</li>");
+			});
+			
+			$("#detailsContent").append("</ul></p>");
+			
+			if (!node.fetched && (node.type == "http://xmlns.com/foaf/corp#Company" || node.type == "company")){
+				$("#expand").show();
+			} else {
+				$("#expand").hide();
+			}
+		}
+		
+		function hideDetails(){
+			$("#details").fadeOut(400);
+			detailsDisplayed = false;
+			detail_node = null;
+		}
+		
+		$("#hide_details").on("click", function(event){
+			hideDetails();
+		});
+		
+		$("#expand").on("click", function(event){
+			if (!detailsDisplayed){
+	
+				$("#details").fadeIn(400);
+				detailsDisplayed = true;
+			}
+			$("#expand").hide();
+			$("#detailsContent").html("SPARQL Query in Progress...");
+			addBrowseGraph(detail_node);
+		});
+		
+		//-------------------------------------
+		// Top Right Controls 
+		//-------------------------------------
+		
+		function handleFlyMode(){
+			if (controls.flyMode == true){
+				controls.flyMode = false;
+			} else {
+				controls.flyMode = true;
+			}
+		}
+	
+		$("#fly").on("click", function(event){
+			//console.log("fly!");
+			handleFlyMode();
+		});
+		
+		$("#zoom_in").mousedown(function(event){
+			//console.log("zooming in");
+			controls.zoom = -1;
+		});
+		
+		$("#zoom_in").mouseleave(function(event){
+			//console.log("stop zooming in");
+			controls.zoom = 0;
+		});
+		
+		$("#zoom_in").mouseup(function(event){
+			//console.log("stop zooming in");
+			controls.zoom = 0;
+		});
+		
+		$("#zoom_out").mousedown(function(event){
+			//console.log("zooming out");
+			controls.zoom = 1;
+		});
+		
+		$("#zoom_out").mouseleave(function(event){
+			//console.log("stop zooming out");
+			controls.zoom = 0;
+		});
+		
+		$("#zoom_out").mouseup(function(event){
+			console.log("stop zooming out");
+			controls.zoom = 0;
+		});
+
+		main();
+		
+	</script>
+</body>
+
+</html>
+
